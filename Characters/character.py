@@ -100,6 +100,9 @@ class Character():
         txt = f'{Color.BOLD}{self._color}{self._name}{Color.END}' if color else self._name
         return txt
     
+    def get_user_controlled(self) -> bool:
+        return self._user_controlled
+    
     def get_HP(self):
         return self._HP
     

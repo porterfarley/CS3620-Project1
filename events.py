@@ -86,7 +86,20 @@ def get_user_opponent(enemies: list[Character]) -> Character:
             print(INVALID_CHOICE_TEXT)
             continue
         
-def attack(attacker: Character, defender: Character, enemies: list[Character], dice: int, num_dice: int, action_name: str):
+def attack(attacker: Character, defender: Character, enemies: list[Character], dice: int, num_dice: int, action_name: str) -> None:
+    """Handles the attack event.
+        1) Handles all the printing of actions used
+        2) Handles all dice rolling, including doubling attack damage for 20's rolled
+        3) Calls defender.change_health() if attack successful. Removes defender from enemies if killed.
+
+    Args:
+        attacker (Character): Attacking Character. Can be user_controlled or !user_controlled
+        defender (Character): Defending Character. Can be user_controlled or !user_controlled
+        enemies (list[Character]): Collection of enemies. Modified if defender is killed.
+        dice (int): Highest number on the damage dice. i.e. 6 would be a d6, giving values from 1-6 inclusive.
+        num_dice (int): How many of the above dice to roll.
+        action_name (str): Name of the action being done for printing purposes.
+    """
     
     # Print action
     time.sleep(0.5)
@@ -113,7 +126,7 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
             # Get dmg num 
             dmg = attacker.get_ATK() * 2
             for i in range(num_dice*2):
-                dmg += random.randint(1, dice+1)
+                dmg += random.randint(1, dice)
             
             # Print attack details
             time.sleep(0.5)
@@ -139,4 +152,49 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
         time.sleep(0.5)
         print(f"  > {defender.get_name(True)} successfully defends against {attacker.get_name(True)}'s {action_name}.")
 
+# TODO: combat() - Add Turn Loop
+def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int):
+    """Handles combat turns
+
+    Args:
+        allies (list[Character]): user and all allies
+        enemies (list[Character]): all enemies
+        combat_text (str): Text to print as combat is starting
+        user_order (int): Handles the user's spot in turns. -1 = last, 0 = random, 1 = first, else = random.
+    """
+    
+    # Find and save user Character
+    for i in range(len(allies)):
+        if allies[i].get_user_controlled:
+            user = allies[i]
+            break
         
+    # Get random initative order
+    all_characters = allies + enemies
+    random.shuffle(all_characters)
+    
+    # Add user to the back of initiative
+    if user_order == -1:
+        all_characters.remove(user)
+        all_characters.append(user)
+    # Add user to the front of initiative
+    elif user_order == 1:
+        all_characters.remove(user)
+        all_characters.insert(0, user)
+   
+    time.sleep(0.5)
+    print(combat_text)
+    time.sleep(0.5)
+    print("\nInitative Order")
+    for i in range(len(all_characters)):
+        time.sleep(0.25)
+        print(f"  > {i}) {str(all_characters[i])}")
+        
+        
+# TODO: get_cpu_choice()
+def get_cpu_choice():
+    pass
+
+# TODO: get_cpu_target()
+def get_cpu_target():
+    pass

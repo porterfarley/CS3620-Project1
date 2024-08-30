@@ -34,25 +34,29 @@ def main():
     mage1 = Mage("Gandalf")
     mage1.set_user_controlled(True)
     
-    while True:
-        print(str(mage1))
-        action = get_user_action(mage1)
-        numParams = len(signature(action.on_call).parameters)
-        if(numParams == 1):
-            action.on_call(enemies)
-        else:
-            action.on_call()
+    allies = [mage1]
+    combat_text = "\nThe battle begins!"
+    combat(allies, enemies, combat_text, 0)
+    
+    # while True:
+    #     print(str(mage1))
+    #     action = get_user_action(mage1)
+    #     numParams = len(signature(action.on_call).parameters)
+    #     if(numParams == 1):
+    #         action.on_call(enemies)
+    #     else:
+    #         action.on_call()
         
-        print()
-        print(str(mage1))
-        for i in range(len(enemies)):
-            print(str(enemies[i]))
-        print()
+    #     print()
+    #     print(str(mage1))
+    #     for i in range(len(enemies)):
+    #         print(str(enemies[i]))
+    #     print()
         
-        if(len(enemies) == 0):
-            break
+    #     if(len(enemies) == 0):
+    #         break
         
-    mage1.change_health(-1000)
+    # mage1.change_health(-1000)
     
         
     # print()
