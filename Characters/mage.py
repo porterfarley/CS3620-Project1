@@ -8,8 +8,9 @@ Date Created: 08/27/2024
 
 from .character import Character
 from action import Action
-from events import *
 from color import Color
+import random
+import time
 
 class Mage(Character):
     
@@ -78,8 +79,8 @@ class Mage(Character):
         import random
         
         MP_COST = 20
-        DICE = 12
-        NUM_DICE = 2
+        DICE = 6
+        NUM_DICE = 3
         ACTION_NAME = "Fireball"
         
         # Action Print
@@ -93,8 +94,8 @@ class Mage(Character):
             print("  > Their strained magic fails to generate much more than sparks. Their enemies are unfazed.")
             return None
         
-        # Get damage roll
-        dmg = self._ATK
+        # Get damage roll (3d6 + 3)
+        dmg = 3
         for i in range(NUM_DICE):
             dmg += random.randint(1, DICE)
             
@@ -118,6 +119,8 @@ class Mage(Character):
     
     def attack(self, enemies: list[Character]):
         
+        from events import attack
+        
         DICE = 6
         NUM_DICE = 1
         ACTION_NAME = "Attack"
@@ -135,6 +138,8 @@ class Mage(Character):
         Args:
             enemies (list[Character]): List of all enemies
         """
+        
+        from events import attack
         
         MP_COST = 5
         DICE = 6

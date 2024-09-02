@@ -212,6 +212,9 @@ class Character():
     def get_cpu_opponent(self, enemies: list["Character"]) -> "Character":
         return enemies[random.randint(0, len(enemies)-1)]
     
+    def on_defend(self, attacker: "Character")-> None:
+        pass
+    
     # - - - - - ACTIONS - - - - -
      
     def prayer(self):

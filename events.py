@@ -81,6 +81,7 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
     else:
         time.sleep(0.5)
         print(f"  > {defender.get_name(True)} successfully defends against {attacker.get_name(True)}'s {action_name}.")
+        defender.on_defend(attacker)
 
     # Pause 1s after attack finished
     time.sleep(1)
@@ -125,7 +126,7 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
     print("\nInitative Order")
     for i in range(len(all_characters)):
         time.sleep(0.25)
-        print(f"  > {i}) {str(all_characters[i])}")
+        print(f"  > {i+1}) {str(all_characters[i])}")
     print()
     
     i = 0
