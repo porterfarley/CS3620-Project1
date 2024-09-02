@@ -26,15 +26,20 @@ def main():
     
     # print("\nCombat Finished")
     
-    aragorn = Knight("Aragorn")
-    aragorn.set_user_controlled(True)
-    allies = [aragorn]
+    sung_jin_woo = Assassin("Sung Jin-Woo")
+    sung_jin_woo.set_user_controlled(True)
+    allies = [sung_jin_woo]
     
-    redknight1 = Mage("Red Knight 1")
-    redknight1.set_color(Color.RED)
-    enemies = [redknight1]
+    redmage1 = Mage("Red Mage 1")
+    redmage1.set_color(Color.RED)
     
-    combat_text = "Knight Battle Test 1"
+    goblin1 = Goblin("Goblin 1")
+    goblin2 = Goblin("Goblin 2")
+    goblin3 = Goblin("Goblin 3")
+    
+    enemies = [redmage1, goblin1, goblin2, goblin3]
+    
+    combat_text = "Assassin Battle Test 1"
     combat(allies, enemies, combat_text, 1)
     
     

@@ -48,7 +48,9 @@ class Mage(Character):
         curr_HP = self.get_HP()
         curr_MP = self.get_MP()
         
-        if(curr_HP <= self.get_HP_MAX()/3 and curr_MP > 25):
+        should_heal = random.random()
+        
+        if(curr_HP <= self.get_HP_MAX()/3 and curr_MP > 25 and should_heal >= 0.6):
             return self.get_action_by_name("Prayer")
         else:
             choice = random.random()
@@ -78,7 +80,7 @@ class Mage(Character):
         """
         import random
         
-        MP_COST = 20
+        MP_COST = -20
         DICE = 6
         NUM_DICE = 3
         ACTION_NAME = "Fireball"
@@ -87,7 +89,7 @@ class Mage(Character):
         print(f"  > {self.get_name(True)} casts {ACTION_NAME}.")
         
         # Break statement for not being able to cast the spell
-        if(not self.change_MP(-MP_COST)):
+        if(not self.change_MP(MP_COST)):
             time.sleep(0.5)
             print("  > NOTICE: Too little MP to cast Fireball.")
             time.sleep(0.5)
@@ -141,7 +143,7 @@ class Mage(Character):
         
         from events import attack
         
-        MP_COST = 5
+        MP_COST = -5
         DICE = 6
         NUM_DICE = 2
         ACTION_NAME = "Blizzard"
@@ -150,11 +152,11 @@ class Mage(Character):
         print(f"  > {self.get_name(True)} casts {ACTION_NAME}.")
         
         # Break statement for not having enough MP to cast
-        if(not self.change_MP(-MP_COST)):
+        if(not self.change_MP(MP_COST)):
             time.sleep(0.5)
-            print(f"  > {self.get_name(True)} casts Blizzard.")
+            print(f"  > {self.get_name(True)} casts {ACTION_NAME}.")
             time.sleep(0.5)
-            print(f"  > NOTICE: Too little MP To cast Blizzard.")
+            print(f"  > NOTICE: Too little MP To cast {ACTION_NAME}.")
             time.sleep(0.5)
             print(f"  > Little more than snowflakes fly from thier fingertips. Their enemies are unfazed.")
         else:

@@ -23,22 +23,66 @@ class Assassin(Character):
         self._color = Color.ORANGE
         
         # Init Assassin actions
+        self._actions.pop()
         self._actions.append(Action(
             "Attack",
             "Slash with poisoned dagger. Deals 2d6 damage.",
-            self.knife
+            self.attack
         ))
         self._actions.append(Action(
             "Critical Strike",
-            "Teleport through the shadows, landing a lethal blow on an opponent. Deals 6d6 damage, costs 20 MP.",
-            self.critical_strike
+            "Teleport through the shadows, landing a lethal blow on an opponent. Roll w/ +2 to hit, deals 6d6 + ATK damage, costs 20 MP.",
+            self.sneak_attack
         ))
         self._actions.sort(key=lambda action: action.name)
 
-    # TODO: Assassin.knife()
-    def knife():
-        pass
+    # - - - - - ACTIONS - - - - -
+    def attack(self, enemies: list[Character]) -> None:
+        
+        from events import attack
+        
+        DICE = 6
+        NUM_DICE = 2
+        ACTION_NAME = "Attack"
+        
+        if self._user_controlled:
+            opponent = self.get_user_opponent(enemies)
+        else:
+            opponent = self.get_cpu_opponent(enemies)
+            
+        attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
     
-    # TODO: Assassin.critical_hit()
-    def critical_strike():
-        pass
+    def sneak_attack(self, enemies: list[Character]) -> None:
+        
+        from events import attack
+        import time
+        
+        MP_COST = -20
+        DICE = 6
+        NUM_DICE = 6
+        ACTION_NAME = "Sneak Attack"
+            
+        # +2 to ATK for action
+        curr_ATK = self.get_ATK()
+        self._ATK += 2
+        
+        # Break statement for not having enough MP to cast
+        if(not self.change_MP(MP_COST)):
+            time.sleep(0.5)
+            print(f"  > {self.get_name(True)} casts {ACTION_NAME}.")
+            time.sleep(0.5)
+            print(f"  > NOTICE: Too little MP To cast {ACTION_NAME}.")
+            time.sleep(0.5)
+            print(f"  > Shadows swirl at their feet, but fail to engulf them. No attack is made.")
+        else:
+            # Identify if user controlled to get opponent
+            if self._user_controlled:
+                opponent = self.get_user_opponent(enemies)
+            else:
+                opponent = self.get_cpu_opponent(enemies)
+            
+            # Attack
+            attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
+        
+        # Remove ATK Bonus
+        self._ATK = curr_ATK
