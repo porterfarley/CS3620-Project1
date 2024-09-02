@@ -7,84 +7,12 @@ Date Created: 08/27/2024
 """
 
 import time
-from Characters.character import *
-
-INVALID_CHOICE_TEXT = "  > Not a valid choice. Please try again."
+from Characters import *
+import random
 
 def exit_program():
     print("Sucks to suck")
     exit(0)
-
-def get_user_action(user: Character) -> Action:
-    """Gets user input and selects the Character's Action
-
-    Args:
-        user (Character): User's character
-
-    Returns:
-        Action: The Action the player selected
-    """
-    
-    # Gets all actions
-    actions = user.get_actions()
-    
-    # Loops until valid input taken
-    while True:
-        for action in actions:
-            print(f'  > {str(action)}')
-        
-        choice = input("Your Action: ")
-        # print(f'  > User wrote: {choice}')
-        
-        # Break statement to end game at any time
-        if(choice.upper() == "EXIT_PROGRAM"):
-            exit_program()
-        
-        actions = user.get_actions()
-        for action in actions:
-            # print(f'     - Action Checked: {action.name[0].upper()}|{action.name.upper()}')
-            if(choice.upper() == action.name.upper()):
-                time.sleep(1)
-                return action
-        
-        time.sleep(1)
-        print(INVALID_CHOICE_TEXT)
-    
-def get_user_opponent(enemies: list[Character]) -> Character:
-    """Gets user input and selects enemy out of the list.
-
-    Args:
-        enemies (list[Character]): List of all possible targets.
-
-    Returns:
-        Character: Enemy being selected.
-    """
-    
-    while True:
-        print("Select your target")
-        for i in range(len(enemies)):
-            print(f"  > {str(i+1)}) {str(enemies[i])}")
-        choice = input("Target: ")
-        
-        # Break statement to end game at any time
-        if choice.upper() == "EXIT_PROGRAM":
-            exit_program()
-        
-        # Handle user entering a number
-        if choice.isdigit():
-            choice = int(choice) - 1
-            
-            if choice < len(enemies) and choice >= 0:
-                return enemies[choice]
-            else:
-                print(INVALID_CHOICE_TEXT)
-                continue
-        else:
-            for i in range(len(enemies)):
-                if (enemies[i].get_name(False).upper() == choice.upper()):
-                    return enemies[i]
-            print(INVALID_CHOICE_TEXT)
-            continue
         
 def attack(attacker: Character, defender: Character, enemies: list[Character], dice: int, num_dice: int, action_name: str) -> None:
     """Handles the attack event.
@@ -152,6 +80,9 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
         time.sleep(0.5)
         print(f"  > {defender.get_name(True)} successfully defends against {attacker.get_name(True)}'s {action_name}.")
 
+    # Pause 1s after attack finished
+    time.sleep(1)
+
 # TODO: combat() - Add Turn Loop
 def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int):
     """Handles combat turns
@@ -160,8 +91,10 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
         allies (list[Character]): user and all allies
         enemies (list[Character]): all enemies
         combat_text (str): Text to print as combat is starting
-        user_order (int): Handles the user's spot in turns. -1 = last, 0 = random, 1 = first, else = random.
+        user_order (int): Handles the user's spot in turns. -1 = last, 1 = first, else = random.
     """
+    
+    from inspect import signature
     
     # Find and save user Character
     for i in range(len(allies)):
@@ -181,20 +114,65 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
     elif user_order == 1:
         all_characters.remove(user)
         all_characters.insert(0, user)
-   
+    
+    # Print initial combat text
     time.sleep(0.5)
     print(combat_text)
+    
+    # Print the Initiative Order
     time.sleep(0.5)
     print("\nInitative Order")
     for i in range(len(all_characters)):
         time.sleep(0.25)
         print(f"  > {i}) {str(all_characters[i])}")
+    print()
+    
+    i = 0
+    while len(enemies) > 0:
+        # Gets character who's up
+        up_next = all_characters[i]
         
+        # Pass character if character dead
+        if up_next.get_HP() <= 0:
+            continue
         
-# TODO: get_cpu_choice()
-def get_cpu_choice():
-    pass
+        # Print character's name
+        time.sleep(0.5)
+        print(str(up_next))
+        
+        # Get users action and target
+        if up_next.get_user_controlled():
+            action = up_next.get_user_action()
+            num_params = len(signature(action.on_call).parameters)
+            if(num_params == 1):
+                action.on_call(enemies)
+            else:
+                action.on_call()
+                
+        # Get CPU Action and Target        
+        else:
+            # Get CPU Action
+            action = up_next.get_cpu_action()
+            
+            # Determine if ally or enemy by searching through allies
+            targets = allies
+            for x in allies:
+                if x == up_next: targets = enemies
 
-# TODO: get_cpu_target()
-def get_cpu_target():
-    pass
+            # Call action.
+            num_params = len(signature(action.on_call).parameters)
+            if(num_params == 1):
+                action.on_call(targets)
+            else:
+                action.on_call()
+        
+        # End statement for i
+        if i + 1 == len(all_characters):
+            i = 0
+        else:
+            i += 1
+        
+        # Make user click enter to continue. Allows for exit_program
+        if input("  > Press enter to continue: ").upper() == "EXIT_PROGRAM":
+            exit_program()
+        print()

@@ -23,7 +23,8 @@ class Goblin(Character):
         self._DEF = -2
         self._color = Color.RED
         
-        # Init Mage Actions
+        # Init Goblin Actions
+        self._actions.clear()
         self._actions.append(Action(
             "Attack",
             "Slash with a rusty knife.",
@@ -41,5 +42,12 @@ class Goblin(Character):
         NUM_DICE = 1
         ACTION_NAME = "Attack"
         
-        target = get_user_opponent(enemies)    
-        attack(self, target, enemies, DICE, NUM_DICE, ACTION_NAME)
+        if self._user_controlled:
+            opponent = self.get_user_opponent(enemies)
+        else:
+            opponent = self.get_cpu_opponent(enemies)
+            
+        attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
+        
+    def get_cpu_action(self) -> Action:
+        return self._actions[0]

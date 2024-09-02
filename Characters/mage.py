@@ -24,10 +24,11 @@ class Mage(Character):
         self._color = Color.BLUE
         
         # Init Mage Actions
+        self._actions.pop()
         self._actions.append(Action(
             "Attack",
             "Swing with mage's staff. Deals 1d6 damage.",
-            self.staff
+            self.attack
         ))
         self._actions.append(Action(
             "Blizzard",
@@ -43,22 +44,24 @@ class Mage(Character):
         
     # TODO: Mage.fireball()
     def fireball(self, enemies: list[Character]):
-        
-        target = get_user_opponent(enemies)
-        print(f"  > I Cast Fireball at {target.get_name()}")
+        pass
     
     
     
     
     # TODO: Mage.staff()
-    def staff(self, enemies: list[Character]):
+    def attack(self, enemies: list[Character]):
         
         DICE = 6
         NUM_DICE = 1
         ACTION_NAME = "Attack"
         
-        target = get_user_opponent(enemies)    
-        attack(self, target, enemies, DICE, NUM_DICE, ACTION_NAME)
+        if self._user_controlled:
+            opponent = self.get_user_opponent(enemies)
+        else:
+            opponent = self.get_cpu_opponent(enemies)
+            
+        attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
     
     
     

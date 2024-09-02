@@ -24,9 +24,14 @@ def main():
     enemies = [
         Goblin("Goblin 1"),
         Goblin("Goblin 2"),
-        Goblin("Mind Goblin"),
-        Goblin("Young Blue Dragon")
     ]
+    
+    mindgoblin = Goblin("Mind Goblin")
+    enemies.append(mindgoblin)
+    
+    dragon = Character("Young Blue Dragon")
+    dragon.change_health(-4)
+    enemies.append(dragon)
     
     for i in range(len(enemies)):
         enemies[i].change_health(-6)
@@ -36,29 +41,56 @@ def main():
     
     allies = [mage1]
     combat_text = "\nThe battle begins!"
-    combat(allies, enemies, combat_text, 0)
+    combat(allies, enemies, combat_text, 1)
     
-    # while True:
-    #     print(str(mage1))
-    #     action = get_user_action(mage1)
-    #     numParams = len(signature(action.on_call).parameters)
-    #     if(numParams == 1):
-    #         action.on_call(enemies)
-    #     else:
-    #         action.on_call()
-        
-    #     print()
-    #     print(str(mage1))
-    #     for i in range(len(enemies)):
-    #         print(str(enemies[i]))
-    #     print()
-        
-    #     if(len(enemies) == 0):
-    #         break
-        
-    # mage1.change_health(-1000)
+    # # Gandalf's Action
+    # print(str(mage1))
+    # action = mage1.get_user_action()
+    # num_params = len(signature(action.on_call).parameters)
+    # if(num_params == 1):
+    #     action.on_call(enemies)
+    # else:
+    #     action.on_call()
     
+    # # Show Status'
+    # print()
+    # print(str(mage1))
+    # for i in range(len(enemies)):
+    #     print(str(enemies[i]))
+    # print()
+    
+    # # Young Blue Dragon's Action
+    # action = dragon.get_cpu_action()
+    # num_params = len(signature(action.on_call).parameters)
+    # if(num_params == 1):
+    #     action.on_call(allies)
+    # else:
+    #     action.on_call()
         
+    # # Show Status'
+    # print()
+    # print(str(mage1))
+    # for i in range(len(enemies)):
+    #     print(str(enemies[i]))
+    # print()
+    
+    # # Young Blue Dragon's Action
+    # action = dragon.get_cpu_action()
+    # num_params = len(signature(action.on_call).parameters)
+    # if(num_params == 1):
+    #     action.on_call(allies)
+    # else:
+    #     action.on_call()
+        
+    
+    # # Mind Goblin's Action
+    # action = mindgoblin.get_cpu_action()
+    # num_params = len(signature(action.on_call).parameters)
+    # if(num_params == 1):
+    #     action.on_call(allies)
+    # else:
+    #     action.on_call()
+    
     # print()
     
     # knight1 = Knight("Aragorn")
