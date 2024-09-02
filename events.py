@@ -58,7 +58,7 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
             
             # Print attack details
             time.sleep(0.5)
-            print(f"  > {attacker.get_name(True)} scores a critical hit on {defender.get_name(True)}, dealing {dmg}.")
+            print(f"  > {attacker.get_name(True)} scores a critical hit on {defender.get_name(True)}, dealing {dmg} damage.")
         
         # Normal hit mechanics
         else:
@@ -69,12 +69,14 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
             
             # Print attack details
             time.sleep(0.5)
-            print(f"  > {attacker.get_name(True)} deals {dmg} to {defender.get_name(True)}.")
+            print(f"  > {attacker.get_name(True)} deals {dmg} damage to {defender.get_name(True)}.")
         
         # Apply damage. If defender killed, remove from enemies.
-        time.sleep(0.5)
-        if(defender.change_health(-dmg)):
+        if(defender.change_HP(-dmg)):
             enemies.remove(defender)
+        else:
+            time.sleep(0.5)
+            print(f"  > {defender.get_name(True)} New HP: {defender.get_HP()}/{defender.get_HP_MAX()} HP")
         
     else:
         time.sleep(0.5)
@@ -83,7 +85,6 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
     # Pause 1s after attack finished
     time.sleep(1)
 
-# TODO: combat() - Add Turn Loop
 def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int):
     """Handles combat turns
 
@@ -134,6 +135,11 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
         
         # Pass character if character dead
         if up_next.get_HP() <= 0:
+            
+            if i + 1 == len(all_characters):
+                i = 0
+            else:
+                i += 1
             continue
         
         # Print character's name

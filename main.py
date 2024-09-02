@@ -26,15 +26,14 @@ def main():
         Goblin("Goblin 2"),
     ]
     
-    mindgoblin = Goblin("Mind Goblin")
-    enemies.append(mindgoblin)
+    mindgoblin1 = Goblin("Mind Goblin 1")
+    mindgoblin2 = Goblin("Mind Goblin 2")
     
-    dragon = Character("Young Blue Dragon")
-    dragon.change_health(-4)
-    enemies.append(dragon)
+    enemies.append(mindgoblin1)
+    enemies.append(mindgoblin2)
     
     for i in range(len(enemies)):
-        enemies[i].change_health(-6)
+        enemies[i].change_HP(-6)
     
     mage1 = Mage("Gandalf")
     mage1.set_user_controlled(True)
@@ -42,6 +41,8 @@ def main():
     allies = [mage1]
     combat_text = "\nThe battle begins!"
     combat(allies, enemies, combat_text, 1)
+    
+    print("\nCombat Finished")
     
     # # Gandalf's Action
     # print(str(mage1))
