@@ -30,6 +30,12 @@ class Knight(Character):
         ))
         self._actions.sort(key=lambda action: action.name)
         
+    # - - - - - COMBAT - - - - - 
+        
+        
+        
+    # - - - - - ACTIONS - - - - -
+        
     # TODO: Knight.greatsword()
     def greatsword():
         pass

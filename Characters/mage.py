@@ -41,7 +41,33 @@ class Mage(Character):
             self.fireball
         ))
         self._actions.sort(key=lambda action: action.name)
+    
+    def get_cpu_action(self) -> Action:
         
+        curr_HP = self.get_HP()
+        curr_MP = self.get_MP()
+        
+        if(curr_HP <= self.get_HP_MAX()/3 and curr_MP > 25):
+            return self.get_action_by_name("Prayer")
+        else:
+            choice = random.random()
+            
+            if curr_MP >= 20:
+                if choice <= 0.45:
+                    return self.get_action_by_name("Blizzard")
+                elif choice <= 0.75:
+                    return self.get_action_by_name("Attack")
+                else:
+                    return self.get_action_by_name("Fireball")
+            elif curr_MP >= 10:
+                if choice <= 0.6:
+                    return self.get_action_by_name("Blizzard")
+                else:
+                    return self.get_action_by_name("Attack")
+            else:
+                return self.get_action_by_name("Attack")
+            
+    
     def fireball(self, enemies: list[Character]) -> None:
         """Wizard special attack that automatically hits every enemy, doing
         2d12 damage, costs 20 MP.
@@ -90,7 +116,6 @@ class Mage(Character):
         for enemy in slain_enemies:
             enemies.remove(enemy)
     
-    
     def attack(self, enemies: list[Character]):
         
         DICE = 6
@@ -103,10 +128,6 @@ class Mage(Character):
             opponent = self.get_cpu_opponent(enemies)
             
         attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
-    
-    
-    
-        
     
     def blizzard(self, enemies: list[Character]) -> None:
         """Uses events.attack() to attempt 2d6 dmg at 5 MP Cost.

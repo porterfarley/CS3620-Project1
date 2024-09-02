@@ -9,6 +9,7 @@ Date Created: 08/27/2024
 from inspect import signature
 from Characters import *
 from events import *
+from color import Color
 
 def main():
     
@@ -21,24 +22,14 @@ def main():
         
     # print()
     
-    enemies = [
-        Goblin("Goblin 1"),
-        Goblin("Goblin 2"),
-    ]
+    gandalf = Mage("Gandalf")
+    gandalf.set_user_controlled(True)
     
-    mindgoblin1 = Goblin("Mind Goblin 1")
-    mindgoblin2 = Goblin("Mind Goblin 2")
+    saruman = Mage("Saruman")
+    saruman.set_color(Color.RED)
     
-    enemies.append(mindgoblin1)
-    enemies.append(mindgoblin2)
-    
-    for i in range(len(enemies)):
-        enemies[i].change_HP(-6)
-    
-    mage1 = Mage("Gandalf")
-    mage1.set_user_controlled(True)
-    
-    allies = [mage1]
+    allies = [gandalf]
+    enemies = [saruman]
     combat_text = "\nThe battle begins!"
     combat(allies, enemies, combat_text, 1)
     

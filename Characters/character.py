@@ -296,3 +296,6 @@ class Character():
     
     def set_user_controlled(self, user_controlled: bool) -> None:
         self._user_controlled = bool
+        
+    def set_color(self, color: str) -> None:
+        self._color = color
