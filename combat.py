@@ -1,6 +1,6 @@
 """
-Filename: events.py
-Description: Defines events within the game
+Filename: combat.py
+Description: Defines combat events within the game
 Author: Porter Farley
 Contact: pfarley509@gmail.com
 Date Created: 08/27/2024

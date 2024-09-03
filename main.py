@@ -10,6 +10,7 @@ from inspect import signature
 from Characters import *
 from combat import *
 from color import Color
+from events import *
 
 def main():
     
@@ -26,21 +27,27 @@ def main():
     
     # print("\nCombat Finished")
     
-    sung_jin_woo = Assassin("Sung Jin-Woo")
-    sung_jin_woo.set_user_controlled(True)
-    allies = [sung_jin_woo]
+    print("Test Dialouge 1")
+    print()
+    intro()
+    character_creation()
     
-    redmage1 = Mage("Red Mage 1")
-    redmage1.set_color(Color.RED)
     
-    goblin1 = Goblin("Goblin 1")
-    goblin2 = Goblin("Goblin 2")
-    goblin3 = Goblin("Goblin 3")
+    # sung_jin_woo = Assassin("Sung Jin-Woo")
+    # sung_jin_woo.set_user_controlled(True)
+    # allies = [sung_jin_woo]
     
-    enemies = [redmage1, goblin1, goblin2, goblin3]
+    # redmage1 = Mage("Red Mage 1")
+    # redmage1.set_color(Color.RED)
     
-    combat_text = "Assassin Battle Test 1"
-    combat(allies, enemies, combat_text, 1)
+    # goblin1 = Goblin("Goblin 1")
+    # goblin2 = Goblin("Goblin 2")
+    # goblin3 = Goblin("Goblin 3")
+    
+    # enemies = [redmage1, goblin1, goblin2, goblin3]
+    
+    # combat_text = "Assassin Battle Test 1"
+    # combat(allies, enemies, combat_text, 1)
     
     
     
