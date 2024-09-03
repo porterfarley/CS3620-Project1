@@ -42,7 +42,7 @@ class Knight(Character):
     # - - - - - ACTIONS - - - - -
     def attack(self, enemies: list[Character]) -> None:
         
-        from events import attack
+        from combat import attack
         
         DICE = 8
         NUM_DICE = 2

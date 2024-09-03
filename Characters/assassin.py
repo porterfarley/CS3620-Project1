@@ -39,7 +39,7 @@ class Assassin(Character):
     # - - - - - ACTIONS - - - - -
     def attack(self, enemies: list[Character]) -> None:
         
-        from events import attack
+        from combat import attack
         
         DICE = 6
         NUM_DICE = 2
@@ -54,7 +54,7 @@ class Assassin(Character):
     
     def sneak_attack(self, enemies: list[Character]) -> None:
         
-        from events import attack
+        from combat import attack
         import time
         
         MP_COST = -20

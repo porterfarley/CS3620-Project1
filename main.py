@@ -8,7 +8,7 @@ Date Created: 08/27/2024
 
 from inspect import signature
 from Characters import *
-from events import *
+from combat import *
 from color import Color
 
 def main():

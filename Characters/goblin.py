@@ -8,7 +8,7 @@ Date Created: 08/29/2024
 
 from .character import Character
 from action import Action
-from events import *
+from combat import *
 from color import Color
 
 class Goblin(Character):

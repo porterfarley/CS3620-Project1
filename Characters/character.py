@@ -124,7 +124,7 @@ class Character():
             Action: The Action the player selected
         """
         
-        from events import exit_program
+        from combat import exit_program
         
         # Gets all actions
         actions = self.get_actions()
@@ -174,7 +174,7 @@ class Character():
             Character: Enemy being selected.
         """
         
-        from events import exit_program
+        from combat import exit_program
         
         while True:
             print("  > Select your target:")
@@ -247,7 +247,7 @@ class Character():
         
     def attack(self, enemies: list["Character"]):
         
-        from events import attack
+        from combat import attack
         
         DICE = 6
         NUM_DICE = 1

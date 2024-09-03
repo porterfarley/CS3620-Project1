@@ -121,7 +121,7 @@ class Mage(Character):
     
     def attack(self, enemies: list[Character]):
         
-        from events import attack
+        from combat import attack
         
         DICE = 6
         NUM_DICE = 1
@@ -141,7 +141,7 @@ class Mage(Character):
             enemies (list[Character]): List of all enemies
         """
         
-        from events import attack
+        from combat import attack
         
         MP_COST = -5
         DICE = 6
