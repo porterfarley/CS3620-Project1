@@ -1,9 +1,9 @@
 """
-Filename: goblin.py
-Description: Defines Goblin class
+Filename: bbg.py
+Description: Defines bbg class
 Author: Porter Farley
 Contact: pfarley509@gmail.com
-Date Created: 08/29/2024
+Date Created: 09/09/2024
 """
 
 from .character import Character
@@ -11,24 +11,29 @@ from action import Action
 from combat import *
 from color import Color
 
-class Goblin(Character):
+from .character import Character
+from action import Action
+from combat import *
+from color import Color
+
+class bbg(Character):
     
     def __init__(self, name):
         super().__init__(name)
-        self._HP = 7
-        self._HP_MAX = 7
-        self._MP = 0
-        self._MP_MAX = 0
-        self._ATK = 1
-        self._DEF = -2
+        self._HP = 999
+        self._HP_MAX = 999
+        self._MP = 999
+        self._MP_MAX = 999
+        self._ATK = 0
+        self._DEF = 10
         self._color = Color.RED
         
         # Init Goblin Actions
         self._actions.clear()
         self._actions.append(Action(
-            "Attack",
-            "Slash at the opponent.",
-            self.attack
+            "Wait",
+            "Passes turn.",
+            lambda: print(f"{self.get_name(True)} waits.")
         ))
         
     def __str__(self) -> str:

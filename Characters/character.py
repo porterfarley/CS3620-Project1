@@ -134,7 +134,7 @@ class Character():
             for i in range(len(actions)):
                 print(f'  > {str(i+1)}) {str(actions[i])}')
             
-            choice = input("  > Your Action: ")
+            choice = input(f"  > {Color.DARKGREY}Your Action:{Color.END} ")
             
             # Break statement to end game at any time
             if(choice.upper() == "EXIT_PROGRAM"):
@@ -180,7 +180,7 @@ class Character():
             print("  > Select your target:")
             for i in range(len(enemies)):
                 print(f"     - {str(i+1)}) {str(enemies[i])}")
-            choice = input("  > Target: ")
+            choice = input(f"  > {Color.DARKGREY}Target:{Color.END} ")
             
             # Break statement to end game at any time
             if choice.upper() == "EXIT_PROGRAM":
@@ -302,3 +302,18 @@ class Character():
         
     def set_color(self, color: str) -> None:
         self._color = color
+        
+    def set_name(self, name: str) -> None:
+        self._name = name
+        
+    def set_HP(self, HP: int) -> None:
+        self._HP = HP
+        
+    def set_HP_MAX(self, HP_MAX: int) -> None:
+        self._HP_MAX = HP_MAX
+        
+    def set_MP(self, MP: int) -> None:
+        self._MP = MP
+        
+    def set_MP_MAX(self, MP_MAX) -> None:
+        self._MP_MAX = MP_MAX
