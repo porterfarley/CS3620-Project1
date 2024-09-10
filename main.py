@@ -29,15 +29,9 @@ def main():
     
 
     #intro()
-    player = character_creation()
-    
-    enemies = [enemy("Shadow 1"),
-               enemy("Shadow 2"),
-               enemy("Shadow 3")]
-    allies = [player]
-    
-    print(str(player))
-    
+    player = Knight("Porter")
+    next_story = story_0(player)
+    print(next_story)
     
     # sung_jin_woo = Assassin("Sung Jin-Woo")
     # sung_jin_woo.set_user_controlled(True)

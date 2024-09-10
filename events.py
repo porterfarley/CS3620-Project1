@@ -281,6 +281,64 @@ def character_creation() -> Character:
     player.set_user_controlled(True)
     return player
     
+def story_0(player: Character) -> callable:
+    
+    txt(["Your eyes shoot open. You were sure you were done for from that...",
+         "that monster? Where is it? Where is everything from where you were?"])
+    
+    necro = Mage("???")
+    character_txt(necro, "Oh! You're finally awake I see, that took much longer than normal. On your feet now.")
+    
+    txt(["The person in front of you wears a deep scarlet Mage's robe, with wrappings",
+         "that cover even their face. Two pin pricks of yellow light poke through",
+         "the darkness where their face should be. The robes cover what appears to be",
+         "a quite old and slender frame. Their voice has an eerie eveness that makes it",
+         "almost impossible to tell their gender, let alone age."])
+    
+    character_txt(necro, ["I'm sure you're disoriented, but I don't have time to tell you everything.",
+                          "The goblins are already on us. Make any questions you have snappy."])
+    
+    choices = ["Where am I?", "Who are you?", "What happened to me?", "Continue"]
+    x = prompt("What do you say?", choices)
+    
+    while (x != len(choices)-1):
+        if x == 0:
+            character_txt(necro, ["The Goblins' front porch. They were planning to march on the capital,",
+                                  "we would have lost thousands if we hadn't gotten here first. We're about 2 kilometers",
+                                  "away from their castle walls. And running out of warriors, I might add, which is why",
+                                  "we called you up."])
+        elif x == 1:
+            necro.set_name("Tvashtri")
+            character_txt(necro, [f"You can call me {necro.get_name(True)}. I'm his royal highness' wizard. I'm also the",
+                                  "reason you're breathing once more. Well, maybe not breathing, but you get the picture."])
+        elif x == 2:
+            character_txt(necro, ["Can't say. You, and the rest, had fought for our proud nation and fallen somewhere along",
+                                  "the way. I called you back from the darkness to come and fight once again."])
+            character_txt(necro, ["You don't remember anything from the past, but it's a blessing you don't really. Your",
+                                  "memories, your body, all sacrifices for the greater good."])
+            
+        x = prompt("What do you say?", choices)
+    
+    if type(player).__name__ == "Knight":
+        return story_1_0
+    elif type(player).__name__ == "Mage":
+        return story_2_0
+    elif type(player).__name__ == "Assassin":
+        return story_3_0
+    else:
+        raise NotImplementedError
+
+# TODO: story_1_0  
+def story_1_0(player: Character) -> callable:
+    pass
+
+# TODO: story_2_0  
+def story_2_0(player: Character) -> callable:
+    pass
+
+# TODO: story_3_0  
+def story_3_0(player: Character) -> callable:
+    pass
 
 # - - - - - - - U T I L I T I E S - - - - - - - 
 
