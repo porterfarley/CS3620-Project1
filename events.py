@@ -48,69 +48,69 @@ def character_creation() -> Character:
     
     from prettytable import PrettyTable
     
-    # opener1 = ["What a strange feeling,",
-    #         "",
-    #         "...",
-    #         "",
-    #         "To feel something again.",
-    #         "",
-    #         "...",
-    #         "",
-    #         "You haven't felt anything in a long time.",
-    #         "",
-    #         "...",
-    #         "",
-    #         "The darkness feels cold against your...",
-    #         "",
-    #         "...",
-    #         "",
-    #         "Skin. Where is your skin?",
-    #         "",
-    #         "...",
-    #         "",
-    #         "For that matter, where is your body?"]
-    # txt(opener1)
+    opener1 = ["What a strange feeling,",
+            "",
+            "...",
+            "",
+            "To feel something again.",
+            "",
+            "...",
+            "",
+            "You haven't felt anything in a long time.",
+            "",
+            "...",
+            "",
+            "The darkness feels cold against your...",
+            "",
+            "...",
+            "",
+            "Skin. Where is your skin?",
+            "",
+            "...",
+            "",
+            "For that matter, where is your body?"]
+    txt(opener1)
     
-    # opener2 = ["You go to look down, though neither head nor eyes move,",
-    #            "and where you would normally find yourself,",
-    #            "only swirling black vapor occupies the space.",
-    #            "",
-    #            "You were sure there used to be a body there before."]
-    # txt(opener2)
+    opener2 = ["You go to look down, though neither head nor eyes move,",
+               "and where you would normally find yourself,",
+               "only swirling black vapor occupies the space.",
+               "",
+               "You were sure there used to be a body there before."]
+    txt(opener2)
     
-    # opener3 = ["Below where you're standing,",
-    #            "or where you would be standing if you had a body,",
-    #            "is what appears to be a large stained glass window.",
-    #            "The only source of light within the darkness,",
-    #            "it is curious looking indeed.",
-    #            "",
-    #            "The center, where you find yourself, lies equally between",
-    #            "three circular panes of magnificent craftmanship.",
-    #            "Each pane holds a weapon of some kind, and you can't help",
-    #            "but feel something inside reaching out to them."
-    #            "",]
-    # txt(opener3)
+    opener3 = ["Below where you're standing,",
+               "or where you would be standing if you had a body,",
+               "is what appears to be a large stained glass window.",
+               "The only source of light within the darkness,",
+               "it is curious looking indeed.",
+               "",
+               "The center, where you find yourself, lies equally between",
+               "three circular panes of magnificent craftmanship.",
+               "Each pane holds a weapon of some kind, and you can't help",
+               "but feel something inside reaching out to them."
+               "",]
+    txt(opener3)
     
-    # opener4 = ["The first circle you notice contains an image of an oak staff.",
-    #            "Around it, you find the glass is actually swirling, the visages",
-    #            "of fire and ice dance playfully around the staff's tip.",
-    #            "",
-    #            "The second pane is filled with a sturdy steel shield in front of",
-    #            "A forest of tall pine trees. It glistens from where you look. You", 
-    #            "feel confidence and sturdiness swell within you looking at it.",
-    #            "",
-    #            "Finally, the third looks to be covered in some kind of liquid.",
-    #            "Closer inspection reveals a tawny poison, dripping from a coated",
-    #            "dagger emerging from the shadows.",
-    #            ""]
-    # txt(opener4)
+    opener4 = ["The first circle you notice contains an image of an oak staff.",
+               "Around it, you find the glass is actually swirling, the visages",
+               "of fire and ice dance playfully around the staff's tip.",
+               "",
+               "The second pane is filled with a sturdy steel shield in front of",
+               "A forest of tall pine trees. It glistens from where you look. You", 
+               "feel confidence and sturdiness swell within you looking at it.",
+               "",
+               "Finally, the third looks to be covered in some kind of liquid.",
+               "Closer inspection reveals a tawny poison, dripping from a coated",
+               "dagger emerging from the shadows.",
+               ""]
+    txt(opener4)
     
-    # opener5 = ["As you go to reach out for any pane, where you know your arm",
-    #            "used to be is now only flickers of a vaguely human form.",
-    #            "",
-    #            "Each pane seems to hum as you make any approach towards it at all,",
-    #            "almost as if they call for you, praying your hand."]
-    # txt(opener5)
+    opener5 = ["As you go to reach out for any pane, where you know your arm",
+               "used to be is now only flickers of a vaguely human form.",
+               "",
+               "Each pane seems to hum as you make any approach towards it at all,",
+               "almost as if they call for you, praying your hand."]
+    txt(opener5)
     
     txt(f"{Color.DARKGREY}(TIP: When making game decisions, you can type either the number or the text option,\n then press enter to select your choice.){Color.END}")
     
