@@ -31,12 +31,12 @@ def main():
     #intro()
     player = character_creation()
     
-    enemies = [Goblin("Shadow 1"),
-               Goblin("Shadow 2"),
-               Goblin("Shadow 3")]
+    enemies = [enemy("Shadow 1"),
+               enemy("Shadow 2"),
+               enemy("Shadow 3")]
     allies = [player]
     
-    combat(allies, enemies, "Shadows suddenly begin to stir all around you. Eyes appear, and slender\nfaceless humanoid figures run from the shadows, directly at you.", 1)
+    print(str(player))
     
     
     # sung_jin_woo = Assassin("Sung Jin-Woo")

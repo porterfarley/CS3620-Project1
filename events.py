@@ -8,6 +8,7 @@ Date Created: 09/01/2024
 
 from color import Color
 from Characters import *
+from combat import combat
 from typing import Union
 import time
 
@@ -131,8 +132,9 @@ def character_creation() -> Character:
             print()
             
             table = PrettyTable()
-            table.field_names = ["Class", "HP", "MP", "ATK", "DEF"]
-            table.add_row([f"{Color.BLUE}Mage{Color.END}", "15", "40", "-1", "2"])
+            table.max_width = 100
+            table.field_names = ["Class", "HP", "MP", "ATK", "DEF", "Special"]
+            table.add_row([f"{Color.BLUE}Mage{Color.END}", "15", "40", "-1", "2", f"{Color.UNDERLINE}Fireball{Color.END}: Hurl a raging ball of flame that automatically hits all opponents. Deals 4d6 damage, costs 20 MP."])
             
             time.sleep(0.5)
             print(table)
@@ -164,8 +166,9 @@ def character_creation() -> Character:
             print()
             
             table = PrettyTable()
-            table.field_names = ["Class", "HP", "MP", "ATK", "DEF"]
-            table.add_row([f"{Color.GREEN}Knight{Color.END}", "30", "10", "+2", "+4"])
+            table.max_width = 100
+            table.field_names = ["Class", "HP", "MP", "ATK", "DEF", "Special"]
+            table.add_row([f"{Color.GREEN}Knight{Color.END}", "30", "10", "+2", "+4", f"{Color.UNDERLINE}Shield Bash{Color.END}: After successfully blocking an attack, bash with your shield for 1d6 unblockable damage, though it cannot kill."])
             
             time.sleep(0.5)
             print(table)
@@ -198,8 +201,9 @@ def character_creation() -> Character:
             print()
             
             table = PrettyTable()
-            table.field_names = ["Class", "HP", "MP", "ATK", "DEF"]
-            table.add_row([f"{Color.ORANGE}Assassin{Color.END}", "20", "20", "+4", "-1"])
+            table.max_width = 100
+            table.field_names = ["Class", "HP", "MP", "ATK", "DEF", "Special"]
+            table.add_row([f"{Color.ORANGE}Assassin{Color.END}", "20", "20", "+4", "-1", f"{Color.UNDERLINE}Critical Strike{Color.END}: Teleport through the shadows, landing a lethal blow on an opponent. Roll w/ +2 to hit, deals 6d6 + ATK damage, costs 20 MP."])
             
             time.sleep(0.5)
             print(table)
@@ -251,6 +255,29 @@ def character_creation() -> Character:
             "rise in a better light."]
     character_txt(shadow, text)
     
+    player.set_user_controlled(True)
+    
+    enemies = [enemy("Shadow 1"),
+               enemy("Shadow 2"),
+               enemy("Shadow 3")]
+    allies = [player]
+    
+    txt([f"{Color.DARKGREY}(TIP: You are about to enter combat. Combat only ends if you are defeated,",
+         "of if all enemies are defeated. Turns are determined randomly and represented by initiative order.",
+         f"On your turn, type the number or the action name of the action you'd like to take.){Color.END}"])
+    
+    combat(allies, enemies, "Shadows suddenly begin to stir all around you. Eyes appear, and slender\nfaceless humanoid figures run from the shadows, directly at you.", 1)
+    
+    txt("The last shadow dissapates as you finish it off. Then, the air begins to vibrate once more.")
+    
+    character_txt(shadow, "Do not delight in thyself, warrior. You are far from the honor you yet seek.")
+    
+    enemies = [shadow]
+    player.set_user_controlled(False)
+    allies = [player]
+    combat(allies, enemies, "Around the eyes materializes a dark figure with spikes rising from his head.\nOne great step rocks the great glass pane, and it swings at you with an outstretched fist.", -1)
+    
+    player.rest()
     player.set_user_controlled(True)
     return player
     

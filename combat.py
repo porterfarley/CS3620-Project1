@@ -97,6 +97,7 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
     """
     
     from inspect import signature
+    from events import next
     
     # Find and save user Character
     for i in range(len(allies)):
@@ -120,6 +121,7 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
     # Print initial combat text
     time.sleep(0.5)
     print(combat_text)
+    next()
     
     # Print the Initiative Order
     time.sleep(0.5)
@@ -130,7 +132,7 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
     print()
     
     i = 0
-    while len(enemies) > 0:
+    while len(enemies) > 0 and len(allies) > 0:
         # Gets character who's up
         up_next = all_characters[i]
         

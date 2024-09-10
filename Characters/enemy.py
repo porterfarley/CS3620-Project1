@@ -1,6 +1,6 @@
 """
-Filename: goblin.py
-Description: Defines Goblin class
+Filename: enemy.py
+Description: Defines enemy class
 Author: Porter Farley
 Contact: pfarley509@gmail.com
 Date Created: 08/29/2024
@@ -11,7 +11,7 @@ from action import Action
 from combat import *
 from color import Color
 
-class Goblin(Character):
+class enemy(Character):
     
     def __init__(self, name):
         super().__init__(name)
@@ -23,7 +23,7 @@ class Goblin(Character):
         self._DEF = -2
         self._color = Color.RED
         
-        # Init Goblin Actions
+        # Init enemy Actions
         self._actions.clear()
         self._actions.append(Action(
             "Attack",

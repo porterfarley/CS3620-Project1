@@ -102,7 +102,7 @@ class Character():
     def die(self) -> None:
         if(not self._user_controlled):
             time.sleep(0.5)
-            print(f"  > {self.get_name(True)} has been slain.")
+            print(f"  > {self.get_name(True)} has been defeated.")
         else:
             time.sleep(0.5)
             print(f"  > Your vision begins to turn red and your breath becomes shallow.")
@@ -113,6 +113,10 @@ class Character():
             time.sleep(0.5)
             input("\nPress enter to continue.")
             exit(0)
+            
+    def rest(self) -> None:
+        self._HP = self._HP_MAX
+        self._MP = self._MP_MAX
             
     def get_user_action(self) -> Action:
         """Gets user input and selects the Character's Action
@@ -298,7 +302,7 @@ class Character():
     # - - - - - SETTERS - - - - -
     
     def set_user_controlled(self, user_controlled: bool) -> None:
-        self._user_controlled = bool
+        self._user_controlled = user_controlled
         
     def set_color(self, color: str) -> None:
         self._color = color

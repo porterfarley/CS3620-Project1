@@ -24,16 +24,16 @@ class bbg(Character):
         self._HP_MAX = 999
         self._MP = 999
         self._MP_MAX = 999
-        self._ATK = 0
-        self._DEF = 10
+        self._ATK = 20
+        self._DEF = 20
         self._color = Color.RED
         
-        # Init Goblin Actions
+        # Init bbg Actions
         self._actions.clear()
         self._actions.append(Action(
-            "Wait",
-            "Passes turn.",
-            lambda: print(f"{self.get_name(True)} waits.")
+            "Smash",
+            "Smashes down with a giant fist of darkness.",
+            self.attack
         ))
         
     def __str__(self) -> str:
@@ -44,7 +44,7 @@ class bbg(Character):
         
     def attack(self, enemies: list[Character]) -> None:
         DICE = 6
-        NUM_DICE = 1
+        NUM_DICE = 30
         ACTION_NAME = "Attack"
         
         if self._user_controlled:
