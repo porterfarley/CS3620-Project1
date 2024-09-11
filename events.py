@@ -13,7 +13,9 @@ from typing import Union
 import time
 
 def intro() -> None:
-   
+    
+    from combat import exit_program
+    
     # Print Title
     print("Hello, and welcome to")
     time.sleep(0.5)
@@ -39,10 +41,49 @@ def intro() -> None:
     print("...")
     time.sleep(0.5)
     print()
-    txt([f"To begin the game, press enter to continue:"])
+    print(f"To begin the game, press enter to continue:")
+    
+    while True:
+        # Handles ADMIN_MODE and EXIT_PROGRAM
+        intro_text = input(f"{Color.YELLOW}▼ {Color.END}")
+        if intro_text.upper() == "EXIT_PROGRAM":
+            from combat import exit_program
+            exit_program
+        elif intro_text.upper() == "ADMIN_MODE":
+            if input("  > Password: ") == "100324":
+                # Get Character to put in the game
+                name = input("  > Name: ")
+                class_type = prompt("What class would you like to use?", ["Knight", "Mage", "Assassin"])
+                if class_type == 0:
+                    player = Knight(name)
+                elif class_type == 1: 
+                    player = Mage(name)
+                else:
+                    player = Assassin(name)
+                    
+                # Get mission
+                while True:
+                    story = "story_" + input("  > Story Module: ")
+                    
+                    try:
+                        story_module = globals()[story]
+                        story_module(player)
+                        break
+                    except:
+                        if story.upper() == "STORY_EXIT_PROGRAM":
+                            exit_program()
+                        else:
+                            print("  > Not valid module. Try again.")
+            else:
+                print("  > Incorrect password. Moving forward in game.")
+                break
+        
+        # General Break Statement
+        break
     
     # Print Dialogue Enter tip
     txt(f"{Color.DARKGREY}(TIP: Whenever you see the {Color.END}{Color.YELLOW}▼ {Color.END}{Color.DARKGREY}icon, press enter to continue.){Color.END}")
+    return character_creation
 
 def character_creation() -> Character:
     
@@ -287,16 +328,17 @@ def story_0(player: Character) -> callable:
          "that monster? Where is it? Where is everything from where you were?"])
     
     necro = Mage("???")
+    necro.set_color(Color.PURPLE)
     character_txt(necro, "Oh! You're finally awake I see, that took much longer than normal. On your feet now.")
     
-    txt(["The person in front of you wears a deep scarlet Mage's robe, with wrappings",
-         "that cover even their face. Two pin pricks of yellow light poke through",
+    txt(["The person in front of you wears a deep purple Mage's robe, with wrappings",
+         "that cover head to toe. Two pin pricks of yellow light poke through",
          "the darkness where their face should be. The robes cover what appears to be",
          "a quite old and slender frame. Their voice has an eerie eveness that makes it",
-         "almost impossible to tell their gender, let alone age."])
+         "almost impossible to tell a thing about them."])
     
     character_txt(necro, ["I'm sure you're disoriented, but I don't have time to tell you everything.",
-                          "The goblins are already on us. Make any questions you have snappy."])
+                          "The goblins are already on us. Make your questions quick."])
     
     choices = ["Where am I?", "Who are you?", "What happened to me?", "Continue"]
     x = prompt("What do you say?", choices)
@@ -305,17 +347,17 @@ def story_0(player: Character) -> callable:
         if x == 0:
             character_txt(necro, ["The Goblins' front porch. They were planning to march on the capital,",
                                   "we would have lost thousands if we hadn't gotten here first. We're about 2 kilometers",
-                                  "away from their castle walls. And running out of warriors, I might add, which is why",
+                                  "out from their castle walls. And running out of warriors, I might add, which is why",
                                   "we called you up."])
         elif x == 1:
             necro.set_name("Tvashtri")
             character_txt(necro, [f"You can call me {necro.get_name(True)}. I'm his royal highness' wizard. I'm also the",
                                   "reason you're breathing once more. Well, maybe not breathing, but you get the picture."])
         elif x == 2:
-            character_txt(necro, ["Can't say. You, and the rest, had fought for our proud nation and fallen somewhere along",
-                                  "the way. I called you back from the darkness to come and fight once again."])
-            character_txt(necro, ["You don't remember anything from the past, but it's a blessing you don't really. Your",
-                                  "memories, your body, all sacrifices for the greater good."])
+            character_txt(necro, ["Can't say. You, and the rest, are warriors for the kingdom, protecting our people",
+                                  "and the kingdoms' interests. I called you up to keep fighting."])
+            character_txt(necro, ["You won't remember anything from the past, but it's a blessing you don't. Your",
+                                  "memories, your body, all sacrifices for the people."])
             
         x = prompt("What do you say?", choices)
     
@@ -330,15 +372,15 @@ def story_0(player: Character) -> callable:
 
 # TODO: story_1_0  
 def story_1_0(player: Character) -> callable:
-    pass
+    print("Got to story_1_0")
 
 # TODO: story_2_0  
 def story_2_0(player: Character) -> callable:
-    pass
+    print("Got to story_2_0")
 
 # TODO: story_3_0  
 def story_3_0(player: Character) -> callable:
-    pass
+    print("Got to story_3_0")
 
 # - - - - - - - U T I L I T I E S - - - - - - - 
 

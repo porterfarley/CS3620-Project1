@@ -28,10 +28,14 @@ def main():
     # print("\nCombat Finished")
     
 
-    #intro()
+    intro()
     player = Knight("Porter")
     next_story = story_0(player)
-    print(next_story)
+    
+    while(type(next_story) == callable):
+        next_story(player)
+        
+    print("All Done")
     
     # sung_jin_woo = Assassin("Sung Jin-Woo")
     # sung_jin_woo.set_user_controlled(True)
