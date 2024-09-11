@@ -13,47 +13,19 @@ from color import Color
 from events import *
 
 def main():
-    
-    # gandalf = Mage("Gandalf")
-    # gandalf.set_user_controlled(True)
-    
-    # saruman = Mage("Saruman")
-    # saruman.set_color(Color.RED)
-    
-    # allies = [gandalf]
-    # enemies = [saruman]
-    # combat_text = "The battle begins!"
-    # combat(allies, enemies, combat_text, 1)
-    
-    # print("\nCombat Finished")
-    
 
-    intro()
-    player = Knight("Porter")
-    next_story = story_0(player)
+    #intro()
+    #player = character_creation()
+    # player = Knight("Porter")
+    # next_story = story_0(player)
     
-    while(type(next_story) == callable):
-        next_story(player)
+    # while(callable(next_story)):
+    #     next_story = next_story(player)
+        
+    player = Knight("Satoru")
+    story_1_0(player)
         
     print("All Done")
-    
-    # sung_jin_woo = Assassin("Sung Jin-Woo")
-    # sung_jin_woo.set_user_controlled(True)
-    # allies = [sung_jin_woo]
-    
-    # redmage1 = Mage("Red Mage 1")
-    # redmage1.set_color(Color.RED)
-    
-    # goblin1 = Goblin("Goblin 1")
-    # goblin2 = Goblin("Goblin 2")
-    # goblin3 = Goblin("Goblin 3")
-    
-    # enemies = [redmage1, goblin1, goblin2, goblin3]
-    
-    # combat_text = "Assassin Battle Test 1"
-    # combat(allies, enemies, combat_text, 1)
-    
-    
     
 if __name__ == "__main__":
     main()

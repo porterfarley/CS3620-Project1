@@ -137,7 +137,7 @@ def character_creation() -> Character:
                "of fire and ice dance playfully around the staff's tip.",
                "",
                "The second pane is filled with a sturdy steel shield in front of",
-               "A forest of tall pine trees. It glistens from where you look. You", 
+               "a forest of tall pine trees. It glistens from where you look. You", 
                "feel confidence and sturdiness swell within you looking at it.",
                "",
                "Finally, the third looks to be covered in some kind of liquid.",
@@ -292,8 +292,7 @@ def character_creation() -> Character:
     player.set_name(name)
     time.sleep(0.5)
     text = [f"Well then {player.get_name(True)}, prepare to prove thyself.",
-            "take up thy weapon and fall not to the shadows, that ye may",
-            "rise in a better light."]
+            "take up thy weapon and fall not to the shadows."]
     character_txt(shadow, text)
     
     player.set_user_controlled(True)
@@ -316,7 +315,7 @@ def character_creation() -> Character:
     enemies = [shadow]
     player.set_user_controlled(False)
     allies = [player]
-    combat(allies, enemies, "Around the eyes materializes a dark figure with spikes rising from his head.\nOne great step rocks the great glass pane, and it swings at you with an outstretched fist.", -1)
+    combat(allies, enemies, "Around the eyes materializes a dark figure with spikes rising from its head.\nOne great step rocks the great glass pane, and it swings at you with a giant, outstretched fist.", -1)
     
     player.rest()
     player.set_user_controlled(True)
@@ -372,7 +371,132 @@ def story_0(player: Character) -> callable:
 
 # TODO: story_1_0  
 def story_1_0(player: Character) -> callable:
-    print("Got to story_1_0")
+    
+    tvashtri = Mage("Tvashtri")
+    character_txt(tvashtri, ["No more delays, they need you out there on the front lines.",
+                             "The 32nd batallion sent word they needed reinforcements hours ago.",
+                             "You'll find them a kilometer north-west of here. Go fast and fight",
+                             "for your country."])
+    
+    txt(["As you exit the wizard's tent, you find only carnage awaiting.",
+         "Pools of orange and black liquid pools around strewn corpses."])
+    
+    choice = 0
+    while choice != 2:
+        choice = prompt("What do you do?", ["Inspect the Goblins", "Inspect the Knights", "Continue down the Road"])
+        
+        # Inspect Goblin
+        if choice == 0:
+            txt(["You're not sure what you were expecting when you heard Goblins,",
+                 "but it sure wasn't this.",
+                 "",
+                 "Before you lies a huddled figure looking all too human. A large",
+                 "spear, embedded through her ribs into the ground keeps her from",
+                 "ever reaching the grass. The slightest green tint to her skin,",
+                 "and a little point to her ears are the only distinguishing"
+                 "features from what you'd think is a normal person.",
+                 "",
+                 "Then again, what would you know about being a normal person",
+                 "these days?",
+                 "",
+                 "The \"Goblin\" woman's face still shows the agony from her final",
+                 "moments. Her hand is reaching for something, tucked into her belt.",
+                 "Before you have a chance to reach for it, a breeze carries a small,",
+                 "white envelope from her hand. You see a scrawling print on it as it",
+                 "is carried by the wind far into the fields."])
+        
+        # Inspect Knight
+        elif choice == 1:
+            txt(["Where you expected to find a body, you find only a pile of armor",
+                "with a sword plunged directly through the breastplate.",
+                "The ground around the armor, however, is coated in a shadowy liquid",
+                "reminiscent of blood, but much different. It feels more magical",
+                "then biological."])
+            
+            soldier = Knight("Dying Soldier")
+            character_txt(soldier, "*groan*")
+            
+            txt(["You are surprised to see one mass clinging to life and rush to",
+                 "his side. Below the waist cannot be found, and shadow slowly",
+                 "seeps from where you believe his torso should begin."])
+            
+            character_txt(soldier, ["*cough*",
+                                    "...",
+                                    "Is someone there?",
+                                    "I can't see anything, it's all going black.",
+                                    "..."])
+            
+            dialogue_options = ["*Grab his hand* I'm here.", "What's happening to you?", "*Stay silent*", "*End His Suffering*"]
+            dialogue_choice = prompt("What do you do?", dialogue_options)
+            
+            if dialogue_choice == 0:
+                character_txt(player, dialogue_options[dialogue_choice])
+                character_txt(soldier, ["*groan*",
+                                        "...",
+                                        "Thank you...",
+                                        "...",
+                                        "I didn't want to die alone...",
+                                        "...",
+                                        "I think—",
+                                        "...",
+                                        "I think my memories are starting to come back...",
+                                        "...",
+                                        "Jane..."])
+                txt(["As you hear these words, the man seems to let go."])
+            elif dialogue_choice == 1:
+                character_txt(player, dialogue_options[dialogue_choice])
+                character_txt(soldier, ["*groan*",
+                                        "...",
+                                        "I'm dying? I think I'm dying.",
+                                        "...",
+                                        "You think...",
+                                        "...",
+                                        "It would be a familiar feeeling at this point.",
+                                        "...",
+                                        "But I think I'm less scared of dying...",
+                                        "...",
+                                        "And more scared of where I'll wake up next time."])
+                txt(["These words send shivers running down your spine.",
+                     "What could the man have meant?"])
+            elif dialogue_choice == 2:
+                character_txt(soldier, ["*groan*",
+                                        "If you can hear me...",
+                                        "...",
+                                        "Run."])
+            else:
+                txt(["You unsheath your weapon and plunge it into the soldier's helmet.",
+                     "However merciful you thought your action, the man screams in one",
+                     "last burst of mortal pain."])
+                
+            txt(["You see a small golden spark float up from the soldier's breastplate.",
+                 "The soldier's armor falls as the remnants of his dark form falls apart",
+                 "like a cloud as it hits a mountainside. The same black liquid coats",
+                 "the ground where the figure touched and the stench of death fills the air.",
+                 "",
+                 "The small spark flickers in a way that seems... living. It falls like a",
+                 "snowflake to the nearest open spot of ground. As it enters the soil,",
+                 "the ground glows softly, and a small sapling sprouts before your eyes."])
+            
+    txt(["As you continue down the road, you reach a cross roads. On your left,",
+         "you see the north-west road. From around a bend in the trees rings",
+         "steel clashing with steel. On your right, another road curves into",
+         "the branches, and a small, worn sign says \"Feldershire\"."])
+    
+    choice = prompt("Which road do you take?", ["The North-West Road to the Battle", "The Road to Feldershire"])
+    if choice == 0:
+        return story_1_a
+    elif choice == 1:
+        return story_1_b
+    else:
+        raise NotImplementedError
+
+# TODO: story_1_a()
+def story_1_a():
+    pass
+
+# TODO: story_1_b()
+def story_1_b():
+    pass
 
 # TODO: story_2_0  
 def story_2_0(player: Character) -> callable:
@@ -401,6 +525,7 @@ def txt(text: Union[str, list[str]]) -> None:
             time.sleep(0.5)
             print(line)
     next()
+    print()
     
 def character_txt(speaker: Character, text: Union[str, list[str]]) -> None:
     if isinstance(text, str):
