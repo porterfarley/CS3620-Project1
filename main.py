@@ -23,7 +23,7 @@ def main():
     #     next_story = next_story(player)
         
     player = Knight("Satoru")
-    story_1_0(player)
+    story_1_start(player)
         
     print("All Done")
     

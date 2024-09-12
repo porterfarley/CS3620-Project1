@@ -361,7 +361,7 @@ def story_0(player: Character) -> callable:
         x = prompt("What do you say?", choices)
     
     if type(player).__name__ == "Knight":
-        return story_1_0
+        return story_1_start
     elif type(player).__name__ == "Mage":
         return story_2_0
     elif type(player).__name__ == "Assassin":
@@ -369,8 +369,13 @@ def story_0(player: Character) -> callable:
     else:
         raise NotImplementedError
 
+# TODO: story_0_captured
+def story_0_captured(player: Character) -> callable:
+    
+    txt(["You slowly start coming to in a dark, stone room. The "])
+
 # TODO: story_1_0  
-def story_1_0(player: Character) -> callable:
+def story_1_start(player: Character) -> callable:
     
     tvashtri = Mage("Tvashtri")
     character_txt(tvashtri, ["No more delays, they need you out there on the front lines.",
@@ -484,18 +489,135 @@ def story_1_0(player: Character) -> callable:
     
     choice = prompt("Which road do you take?", ["The North-West Road to the Battle", "The Road to Feldershire"])
     if choice == 0:
-        return story_1_a
+        return story_1_north_west_road
     elif choice == 1:
-        return story_1_b
+        return story_1_feldershire
     else:
         raise NotImplementedError
 
 # TODO: story_1_a()
-def story_1_a():
-    pass
+def story_1_north_west_road(player: Character) -> callable:
+    
+    txt(["As you turn down the road, the sounds of become more and",
+         "more anguished. You begin to sprint down the path."])
+    
+    txt(["Though you know there are more important things right now,",
+         "you are amazed that you're not getting tired at all.",
+         "The armor doesn't feel heavy, and you're not out of breath.",
+         "",
+         "Well, you're not even breathing actually."])
+    
+    txt(["As you turn the corner, you see one remaining knight,",
+         "frantically swinging at four large wolf-like creatures, each",
+         "lunging and biting ferociously at the warrior. While there are",
+         "several downed wolves, the panicked man is oozing black liquid",
+         "and losing strength fast."])
+    
+    soldier1 = Knight("Soldier 1")
+    soldier1.change_HP(-18)
+    
+    character_txt(soldier1, ["Oy, you! Yeah, you! I need your 'elp over 'ere! Quick",
+                             "Before these bloody wolves eat the both of us!"])
+    
+    pack_leader = enemy("Pack Leader")
+    pack_leader.set_HP_MAX(20)
+    pack_leader.set_HP(20)
+    enemies = [enemy("Wolf 1"), enemy("Wolf 2"), enemy("Wolf 3"), pack_leader]
+    combat([soldier1, player], enemies,
+           "Some of the wolves begin to eye you warily and then a set of razor sharp fangs comes right for you.", 0)
+    
+    if soldier1.get_HP() <= 0:
+        txt(["The poor soldier heaves a couple of pained last breaths and is gone.",
+             "The armor he was wearing seems to fall apart, and his body disperses",
+             "like a cloud. From his chest rises a single golden flicker. It floats",
+             "gently down to the ground and in a flash of golden light, a tree sapling",
+             "springs up from the ground."])
+    else:
+        soldier1.set_name("Phil")
+        character_txt(soldier1, ["Wasn't that a right bit of melarky right there!? Dang goblins and",
+                                 "they're dang wolves! I woulda had me arm bitten clean off without",
+                                 f"you! I owe you a right debt of gratitude. Me name's {soldier1.get_name(True)}, pleasure",
+                                 "to make your acquaintance. If I was you, and we might be, I would",
+                                 "get the bloody 'eck outta—"])
+        txt([f"The other words never leave his mouth, as {soldier1.get_name(True)} falls dead,",
+             "an arrow sticking out of the center of his helmet."])
+        
+    txt(["With war crys and bows at the ready, a group of 20 goblin women",
+         "exit the forest. They stand a little shorter than five feet tall",
+         "each, and outside of a slightly greenish tint to their skin and a",
+         "little point to their ears, look astoundingly human. Clothed in",
+         "makeshift leather armor over commoner's tunics, they glare you",
+         "down with a fiery hatred."])
+    
+    kheah = enemy("Kheah")
+    choice = character_prompt(kheah, "DROP YOUR WEAPONS AND SURRENDER! NOW!", ["*Surrender*", "*Run*"])
+    if choice == 0:
+        
+        txt(["You drop your sword, which clatters loudly against the fallen",
+             "soldier's armor. A woman runs and kicks your sword out of reach.",
+             "The leader walks slowly up to you, pointing her dagger at you.",
+             "She scans the battlefield and looks with horror upon the strewn",
+             "goblin corpses, then snaps back to you."])
+        
+        character_txt(kheah, ["You dirty animal. These were people you stole from us today!"])
+        
+        txt([f"From her belt, {kheah.get_name(True)} retrieves a poultice, into",
+             "which she sinks her dagger."])
+        
+        
+        eyma = enemy("Eyma")
+        character_txt(kheah, [f"Time to see if this stuff really works {eyma.get_name(True)}."])
+        
+        txt(["In a flash, the woman is at your side and the dagger slashes",
+            "your neck. Pain flashes across your face, but is immediately",
+            "drowned out in exhaustion.",
+            "",
+            "You can't quite keep your eyes open.",
+            "",
+            "You're falling...",
+            "",
+            "The last thing you see is the woman standing above you. Her",
+            "eyes brimming with a sense of pride, as you slowly drift",
+            "into a dreamless sleep."])
+        
+        return story_0_captured
+    elif choice == 1:
+        
+        txt(["You slowly lower your sword, as if to put it on the ground. In",
+            "a flash you leap backwards, rolling over your own shoulder and",
+            "twisting, landing right on your feet with scary prowess. Hoisting",
+            "your shield to cover your back and neck, you begin cutting and",
+            "weaving to avoid the incoming arrow onslaught."])
+        
+        txt(["You hear the thuds as several arrows are deflected by your shield",
+             "and you've almost reached the treeline. However, your shield isn't",
+             "large enough to cover your entire body."])
+        
+        txt(["Right before you reach the cover of the trees, three arrows find",
+             "their marks, burying deep into your calves and ankle. You scream,",
+             "but manage to keep your footing and make it into the dense brush."])
+        
+        player.change_HP(-player.get_HP()+1)
+        
+        txt(["The sounds of bow strings follow through the forest, but none are",
+             "getting any closer now. Black liquid oozes from your wounds. After",
+             "what feels like several hours, you find yourself right next to a",
+             "winding road, and decide to rest behind the cover of trees for a time."])
+        
+        player.rest()
+        
+        txt(["You wake up from a short nap and you are completely healed. Your armor",
+             "shows the same puncture wounds, but below is just the shadowy form that",
+             "is growing more and more normal to see."])
+        
+        return story_1_feldershire
+         
+    else:
+        raise NotImplementedError
+    
 
 # TODO: story_1_b()
-def story_1_b():
+def story_1_feldershire():
     pass
 
 # TODO: story_2_0  
