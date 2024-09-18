@@ -98,7 +98,7 @@ class Character():
     def roll_to_defend(self) -> int:
         return random.randint(1, 20)
         
-    # TODO: better death text
+    # TODO: better death text, can we give a chance to repeat at the same story function?
     def die(self) -> None:
         if(not self._user_controlled):
             time.sleep(0.5)
@@ -316,8 +316,14 @@ class Character():
     def set_HP_MAX(self, HP_MAX: int) -> None:
         self._HP_MAX = HP_MAX
         
+        if self._HP > HP_MAX:
+            self._HP = HP_MAX
+        
     def set_MP(self, MP: int) -> None:
         self._MP = MP
         
     def set_MP_MAX(self, MP_MAX) -> None:
         self._MP_MAX = MP_MAX
+        
+        if self._MP > MP_MAX:
+            self._MP = MP_MAX
