@@ -26,7 +26,7 @@ class Assassin(Character):
         self._actions.pop()
         self._actions.append(Action(
             "Attack",
-            "Slash with poisoned dagger. Deals 2d6 damage.",
+            "Slash with poisoned dagger. Deals 2d8 damage.",
             self.attack
         ))
         self._actions.append(Action(
@@ -41,7 +41,7 @@ class Assassin(Character):
         
         from combat import attack
         
-        DICE = 6
+        DICE = 8
         NUM_DICE = 2
         ACTION_NAME = "Attack"
         

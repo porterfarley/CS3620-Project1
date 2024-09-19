@@ -13,14 +13,12 @@ from color import Color
 from events import *
 
 def main():
-
-    #intro()
-    #player = character_creation()
-    # player = Knight("Porter")
-    # next_story = story_0(player)
     
-    # while(callable(next_story)):
-    #     next_story = next_story(player)
+    story_0_intro()
+    player = story_0_character_creation()
+    next_story = story_0(player)
+    while(callable(next_story)):
+        next_story = next_story(player)
         
     player = Knight("Satoru")
     story_1_start(player)

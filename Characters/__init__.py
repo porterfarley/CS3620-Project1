@@ -5,3 +5,5 @@ from .assassin import Assassin
 from .enemy import enemy
 from .bbg import bbg
 from .guardian import Guardian
+from .honored_one import HonoredOne
+from .LordOfDeath import LordOfDeath

@@ -90,9 +90,9 @@ class Mage(Character):
         
         # Break statement for not being able to cast the spell
         if(not self.change_MP(MP_COST)):
-            time.sleep(0.5)
+            time.sleep(0.25)
             print("  > NOTICE: Too little MP to cast Fireball.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print("  > Their strained magic fails to generate much more than sparks. Their enemies are unfazed.")
             return None
         
@@ -102,11 +102,11 @@ class Mage(Character):
             dmg += random.randint(1, DICE)
             
         # Show what happens
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} feels the magic surge from every inch of their body to their hands.")
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > Their staff glows a furious crimson as a sphere of flame soars from the top, enveloping all enemies.")
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} deals {str(dmg)} to all enemies.")
         
         # Do the dmg to each enemy
@@ -153,11 +153,11 @@ class Mage(Character):
         
         # Break statement for not having enough MP to cast
         if(not self.change_MP(MP_COST)):
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {self.get_name(True)} casts {ACTION_NAME}.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > NOTICE: Too little MP To cast {ACTION_NAME}.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > Little more than snowflakes fly from thier fingertips. Their enemies are unfazed.")
         else:
             

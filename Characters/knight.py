@@ -44,7 +44,7 @@ class Knight(Character):
         
         from combat import attack
         
-        DICE = 8
+        DICE = 6
         NUM_DICE = 2
         ACTION_NAME = "Attack"
         
@@ -55,7 +55,6 @@ class Knight(Character):
             
         attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
     
-    # TODO: Knight.shield_bash()
     def shield_bash(self, attacker: Character) -> None:
         """Defensive maneuver on successful block. Automatically hits. Does
         1d6 damage, and cannot kill.
@@ -70,7 +69,7 @@ class Knight(Character):
         ACTION_NAME = "Shield Bash"
         
         # Print initial action
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} uses {ACTION_NAME} on {attacker.get_name(True)}.")
         
         # Get Damage Dice
@@ -86,7 +85,7 @@ class Knight(Character):
             attacker.change_HP(-dmg)
             
         # Print results
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} deals {dmg} damage to {attacker.get_name(True)}.")
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {attacker.get_name(True)} New HP: {attacker.get_HP()}/{attacker.get_HP_MAX()} HP")

@@ -30,17 +30,17 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
     """
     
     # Print action
-    time.sleep(0.5)
+    time.sleep(0.25)
     print(f"  > {attacker.get_name(True)} uses {action_name} on {defender.get_name(True)}")
 
     # Print attacker's roll
     to_hit = attacker.roll_to_hit()
-    time.sleep(0.5)
+    time.sleep(0.25)
     print(f"  > {attacker.get_name(True)} rolls {str(to_hit)} + {str(attacker.get_ATK())} to hit.")
     
     # Print defender's roll
     to_defend = defender.roll_to_defend()
-    time.sleep(0.5)
+    time.sleep(0.25)
     print(f"  > {defender.get_name(True)} rolls {str(to_defend)} + {str(defender.get_DEF())} to defend.")
     
     # Add bonuses
@@ -57,7 +57,7 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
                 dmg += random.randint(1, dice)
             
             # Print attack details
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {attacker.get_name(True)} scores a critical hit on {defender.get_name(True)}, dealing {dmg} damage.")
         
         # Normal hit mechanics
@@ -65,21 +65,21 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
             # Get dmg num
             dmg = attacker.get_ATK()
             for i in range(num_dice):
-                dmg += random.randint(1, dice+1)
+                dmg += random.randint(1, dice)
             
             # Print attack details
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {attacker.get_name(True)} deals {dmg} damage to {defender.get_name(True)}.")
         
         # Apply damage. If defender killed, remove from enemies.
         if(defender.change_HP(-dmg)):
             enemies.remove(defender)
         else:
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {defender.get_name(True)} New HP: {defender.get_HP()}/{defender.get_HP_MAX()} HP")
         
     else:
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {defender.get_name(True)} successfully defends against {attacker.get_name(True)}'s {action_name}.")
         defender.on_defend(attacker)
 
@@ -119,12 +119,12 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
         all_characters.insert(0, user)
     
     # Print initial combat text
-    time.sleep(0.5)
+    time.sleep(0.25)
     print(combat_text)
     next()
     
     # Print the Initiative Order
-    time.sleep(0.5)
+    time.sleep(0.25)
     print("\nInitative Order")
     for i in range(len(all_characters)):
         time.sleep(0.25)
@@ -146,7 +146,7 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
             continue
         
         # Print character's name
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(str(up_next))
         
         # Get users action and target

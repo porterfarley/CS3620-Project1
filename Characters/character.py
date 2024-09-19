@@ -88,7 +88,7 @@ class Character():
         if self._MP + diff > self._MP_MAX:
             self._MP = self._MP_MAX
             
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} New MP: {self.get_MP()}/{self.get_MP_MAX()} MP")
         return True
             
@@ -101,16 +101,16 @@ class Character():
     # TODO: better death text, can we give a chance to repeat at the same story function?
     def die(self) -> None:
         if(not self._user_controlled):
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {self.get_name(True)} has been defeated.")
         else:
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > Your vision begins to turn red and your breath becomes shallow.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > Fear envelopes you. The deed has been done.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {self.get_name(True)} has been slain.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             input("\nPress enter to continue.")
             exit(0)
             
@@ -154,7 +154,7 @@ class Character():
                 if choice < len(actions) and choice >= 0:
                     return actions[choice]
                 else:
-                    time.sleep(0.5)
+                    time.sleep(0.25)
                     print("  > Not a valid choice. Please try again.")
                     continue
             # Handle if user types action name
@@ -197,7 +197,7 @@ class Character():
                 if choice < len(enemies) and choice >= 0:
                     return enemies[choice]
                 else:
-                    time.sleep(0.5)
+                    time.sleep(0.25)
                     print("  > Not a valid choice. Please try again.")
                     continue
             else:
@@ -227,9 +227,9 @@ class Character():
         DICE = 6
         NUM_DICE = 2
         
-        time.sleep(0.5)
+        time.sleep(0.25)
         print(f"  > {self.get_name(True)} casts Prayer.")
-        time.sleep(0.5)
+        time.sleep(0.25)
         
         # If not enough MP, print error message.
         if(not self.change_MP(MP_COST)):
@@ -244,9 +244,9 @@ class Character():
             # Add healing and print effect
             self.change_HP(healing)
             print(f"  > A trickle of sunlight sprinkles from the sky onto {self.get_name(True)}")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {self.get_name(True)} heals for {healing} HP.")
-            time.sleep(0.5)
+            time.sleep(0.25)
             print(f"  > {self.get_name(True)} New HP: {self.get_HP()}/{self.get_HP_MAX()} HP")
         
     def attack(self, enemies: list["Character"]):
@@ -293,6 +293,9 @@ class Character():
     
     def get_actions(self):
         return self._actions
+    
+    def get_color(self):
+        return self._color
     
     def get_action_by_name(self, name: str) -> Action:
         for act in self.get_actions():
