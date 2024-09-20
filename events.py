@@ -76,16 +76,22 @@ def story_0_intro() -> None:
                     try:
                         player.set_user_controlled(True)
                         story_module = globals()[story]
-                        story_module = story_module(player)
                         
-                        while(callable(story_module)):
-                            story_module = story_module(player)
-                        
-                    except:
+                    except Exception as e:
                         if story.upper() == "STORY_EXIT_PROGRAM":
                             exit_program()
                         else:
                             print("  > Not valid module. Try again.")
+                            
+                    try:
+                        story_module = story_module(player)
+                        
+                        while(callable(story_module)):
+                            story_module = story_module(player)
+                    except Exception as e:
+                        print("\nEncountered error.")
+                        print("  > " + str(e))
+                        print()
             else:
                 print("  > Incorrect password. Moving forward in game.")
                 break
@@ -308,7 +314,8 @@ def story_0_character_creation() -> Character:
          "of if all enemies are defeated. Turns are determined randomly and represented by initiative order.",
          f"On your turn, type the number or the action name of the action you'd like to take.){Color.END}"])
     
-    combat(allies, enemies, "Shadows suddenly begin to stir all around you. Eyes appear, and slender\nfaceless humanoid figures run from the shadows, directly at you.", 1)
+    battle_text = "Shadows suddenly begin to stir all around you. Eyes appear, and slender\nfaceless humanoid figures run from the shadows, directly at you."
+    if combat(allies, enemies, battle_text, 1): return story_0_character_creation
     
     txt("The last shadow dissapates as you finish it off. Then, the air begins to vibrate once more.")
     
@@ -317,7 +324,8 @@ def story_0_character_creation() -> Character:
     enemies = [shadow]
     player.set_user_controlled(False)
     allies = [player]
-    combat(allies, enemies, "Around the eyes materializes a dark figure with spikes rising from its head.\nOne great step rocks the great glass pane, and it swings at you with a giant, outstretched fist.", -1)
+    battle_text = "Around the eyes materializes a dark figure with spikes rising from its head.\nOne great step rocks the great glass pane, and it swings at you with a giant, outstretched fist."
+    combat(allies, enemies, battle_text, -1)
     
     player.rest()
     player.set_user_controlled(True)
@@ -384,30 +392,30 @@ def story_0_captured(player: Character) -> callable:
          "large oak door leading into your cell. A young voice squeeks",
          "from the other side."])
     
-    guard1 = enemy("Tristan")
+    tristan = enemy("Tristan")
     kheah = enemy("Kheah")
     
-    character_txt(guard1, ["Oy! You awake in there?"])
+    character_txt(tristan, ["Oy! You awake in there?"])
     
     choices = ["Hello? Who's there?", "Let me out of here or I'll kill you.", "*Say Nothing*"]
     choice = prompt("What do you say?", choices)
     
     character_txt(player, choices[choice])
     if choice == 0:
-        character_txt(guard1, ["Uh, nobody!", "I mean, everybody!", "I mean, a great warrior, that's for sure!", 
+        character_txt(tristan, ["Uh, nobody!", "I mean, everybody!", "I mean, a great warrior, that's for sure!", 
                                "I'd be scared if I was you!", "But I'll let you off easy this time, since you're",
                                f"awake, I'll go get {kheah.get_name(True)}!"])
     elif choice == 1:
-        character_txt(guard1, ["*jumps*", "*shakily* You couldn't if you tried, I'm a tough warrior mate.",
+        character_txt(tristan, ["*jumps*", "*shakily* You couldn't if you tried, I'm a tough warrior mate.",
                                f"But, I'm...retired! Right, I'm retired. So uh...",
                                f"I'll go get {kheah.get_name(True)}, she'll sort you out!"])
     elif choice == 2:
-        character_txt(guard1, ["Well.... uh.....",
+        character_txt(tristan, ["Well.... uh.....",
                                "Are you sure you're not there?",
                                "Oh man, they'll get mad at me if it's a false alarm...",
                                "But I'm NOT going in there...",
                                "Fine, maybe I'll go get her to be sure."])
-        character_txt(guard1, ["*knocks on door*",
+        character_txt(tristan, ["*knocks on door*",
                                "Hello in there!",
                                "You should probably wake up, I'm going to go get",
                                f"{kheah.get_name(True)}, she's going to interrogate you now!"])
@@ -444,7 +452,9 @@ def story_0_captured(player: Character) -> callable:
     choice = prompt("Do you do anything?", ["*Comply*", "*Kick her and run for it*"])
     
     if choice == 1:
-        txt(["The moment the chains come unbolted for the ground,",
+        from combat import user_died
+        
+        txt(["The moment the chains come unbolted from the ground,",
              "you spin with all the mobility you have to kick the",
              "woman in the head."])
         txt(["Your foot connects... with her outstretched hand.",
@@ -456,6 +466,7 @@ def story_0_captured(player: Character) -> callable:
         character_txt(kheah, ["You got what you deserved. Good riddance I say.",
                               "*Spits on you*"])
         player.die()
+        if user_died(): return story_0_captured
         
     txt(["She leads you by the chains down several flights of stone stairs.",
          "The halls look aged, but more confusing is the complete silence",
@@ -471,6 +482,9 @@ def story_0_captured(player: Character) -> callable:
                           "Says you can be reasoned with. You better hope for",
                           "your own sake that's true."])
     
+    return story_0_eyma_talk
+    
+def story_0_eyma_talk(player: Character) -> callable:
     txt(["After one more flight of stairs, you exit through a set of doors",
          "into a huge balcony area. Covered in grass and encircled by large",
          "stone thrones, carved into the natural outcroppings.",
@@ -480,6 +494,8 @@ def story_0_captured(player: Character) -> callable:
     
     eyma = Mage("Eyma")
     eyma.set_color(Color.RED)
+    kheah = Assassin("Kheah")
+    tristan = Knight("Tristan")
     character_txt(eyma, ["Ah, you are here. Thank you for coming."])
     
     txt(["You notice something changing about the girl. She begins to glow",
@@ -492,7 +508,7 @@ def story_0_captured(player: Character) -> callable:
     
     eyma.set_color(Color.BLUE)
     kheah.set_color(Color.ORANGE)
-    guard1.set_color(Color.GREEN)
+    tristan.set_color(Color.GREEN)
     
     character_txt(eyma, [f"My name is {eyma.get_name(True)}, inheritor of my father's throne and newest wielder",
                          f"of the Spark. It has shown me many wonderful things in a world of such sorrow,",
@@ -541,7 +557,7 @@ def story_0_captured(player: Character) -> callable:
                                  "ago, the imperial assault began on our people. The struggle has been",
                                  "horrific. Scared of the Spark's power, they have sought out and killed",
                                  "almost all of our men, as they are the most likely to receive it.",
-                                 f"{guard1.get_name(True)} here is one of the few survivors."])
+                                 f"{tristan.get_name(True)} here is one of the few survivors."])
             character_txt(eyma, ["So, to answer your question, I'm afraid it is not us who is at war with",
                                  "the imperials, but the imperials who are at war with us. We simply wish",
                                  "to preserve our people."])
@@ -721,13 +737,15 @@ def story_0_guardian(player: Character) -> callable:
     
     allies = [player]
     enemies = [enemy("Shadow 1")]
-    combat(allies, enemies, "A single shadow emerges from the floor of the stained\nglass floor and lunges at you.", 0)
+    battle_text = "A single shadow emerges from the floor of the stained\nglass floor and lunges at you."
+    if combat(allies, enemies, battle_text, 0): return story_0_guardian
     
     shadow_mage = Mage("Shadow Mage")
     shadow_mage.set_color(Color.RED)
     shadow_mage.set_MP_MAX(20)
     enemies = [enemy("Shadow 1"), enemy("Shadow 2"), shadow_mage]
-    combat(allies, enemies, "As the shadow disolves, three more take its place. One\nholds aloft a great staff of darkness.", 0)
+    battle_text = "As the shadow disolves, three more take its place. One\nholds aloft a great staff of darkness."
+    if combat(allies, enemies, battle_text, 0): return story_0_guardian
     
     txt(["With the other foes now vanquished, you feel the medallion",
          "pulse with light, and you feel completely restored to your",
@@ -752,7 +770,7 @@ def story_0_guardian(player: Character) -> callable:
     guardian = Guardian("The Guardian")
     allies = [player]
     enemies = [guardian]
-    combat(allies, enemies, f"{guardian.get_name(True)} steps towards you. Now is your chance!", 1)
+    if combat(allies, enemies, f"{guardian.get_name(True)} steps towards you. Now is your chance!", 1): return story_0_guardian
     
     txt([f"{guardian.get_name(True)} falls to one knee, and then down to two. Pieces",
          "of shadow fall like ash from it, and its eyes begin to darken.",
@@ -1076,7 +1094,8 @@ def story_0_tvashtri_fight(player: Character) -> callable:
     allies = [player]
     enemies = [tvashtri]
     
-    combat(allies, enemies, f"{tvashtri.get_name(True)} leaps from the make-shift throne with a staff of bones in hand.", 0)
+    battle_text = f"{tvashtri.get_name(True)} leaps from the make-shift throne with a staff of bones in hand."
+    if combat(allies, enemies, battle_text, 0): return story_0_tvashtri_fight
     
     txt([f"With your final attack, {tvashtri.get_name(True)}'s face coverings fall to the floor."])
     
@@ -1153,13 +1172,13 @@ def story_0_tvashtri_fight(player: Character) -> callable:
     
     txt(["Before long, the girl is no longer visible. Before you stands",
          "an awful amalgamation of bone and rotting flesh. Standing over",
-         f"6 meters high and wielding a club of bone, {tvashtri.get_name(True)}",
-         "has created a true death knight."])
+         "6 meters high and wielding a club of bone, this monster is truly",
+         "horrifying."])
     
     allies = [player]
     enemies = [tvashtri]
-    text = "The skeletal monster begins to radiate deep black and \npurple magic, and begins running towards you."
-    combat(allies, enemies, text, 0)
+    battle_text = "The skeletal monster begins to radiate deep black and \npurple magic, and begins running towards you."
+    if combat(allies, enemies, battle_text, 0): return story_0_tvashtri_fight
     
     return story_0_tvashtri_killed
     
@@ -1197,7 +1216,8 @@ def story_0_tvashtri_killed(player: Character) -> None:
                                 "would be born with the power over death itself, that by it,",
                                 "immortality may be granted to the people."
                                 "...",
-                                "The man was scared and would not allow that to happen."])
+                                "The man was frightened of our power. So he took matters",
+                                "into his own hands."])
     
     character_txt(tvashtri, ["...",
                                 "I hid in the woods as that man set fire to everything",
@@ -1207,7 +1227,7 @@ def story_0_tvashtri_killed(player: Character) -> None:
     
     character_txt(tvashtri, ["...",
                                 f"That man became the first {Color.CYAN}Honored One{Color.END}, and I",
-                                "became the first person to master the art of immortality.",
+                                "became the first person to master arcane immortality.",
                                 "...",
                                 "I vowed to avenge my people, to take the power that was given",
                                 "undeservingly, and to exact my revenge until all have suffered",
@@ -1222,13 +1242,22 @@ def story_0_tvashtri_killed(player: Character) -> None:
                                 "And that truly breeds an anger no one will ever understand."])
     
     character_txt(tvashtri, ["...",
-                                "I suppose if it must end now, then at least the nightmare",
-                                "will finally be over.",
+                             "When the powers slipped from my grasp, the nations",
+                             "began to march on this place with armies.",
+                             "...",
+                             "It was them or me.",
+                             "...",
+                             "They would soon find I would not fall so easily."])
+    
+    character_txt(tvashtri, ["...",
+                                "I suppose if it must end now, then at least this nightmarish",
+                                "existence has finally come to an end.",
                                 "...",
                                 "And maybe...",
                                 "...",
-                                "Maybe I'll get to see my parents again...",
+                                "Maybe I'll get to see them, again.",
                                 "...",
+                                "I'm coming mom."
                                 "..",
                                 ".",
                                 "",
@@ -1236,11 +1265,76 @@ def story_0_tvashtri_killed(player: Character) -> None:
     
     txt([f"{tvashtri.get_name(True)} heaves one final breath, and seems to let go. From",
             "her body rises a tiny, golden flicker. It rises through the roof",
-            "to find a patch of soil somewhere."])
+            "to find a patch of soil somewhere beyond the castle walls."])
 
-# TODO: events.story_0_tvashtri_talk
 def story_0_tvashtri_talk(player: Character) -> callable:
-    pass
+    
+    tvashtri = Mage("Tvashtri")
+    tvashtri.set_color(Color.RED)
+    
+    character_txt(tvashtri, ["You only delay the inevitable, I will be taking the powers",
+                             "you now hold, whether you give them to me willingly or I pry",
+                             "them from your lifeless body. Speak, before I lose my patience."])
+    
+    choices = ["Who are you?",
+               "What do you want?",
+               "Why have you taken us to war?",
+               "Continue"]
+    
+    choice = prompt("What do you say?", choices)
+    while choice != 3:
+        
+        character_txt(player, choices[choice])
+        
+        if choice == 0:
+            character_txt(tvashtri, ["Who am I? Why, I'm the grand wizard to his royal",
+                                     "majesty of course."])
+            txt(["The necromancer gestures to a skeleton slumped against the far",
+                           "wall. Pieces of a crumbled marble crown still hang to the",
+                           "corpse's head."])
+        elif choice == 1:
+            character_txt(tvashtri, ["To spread the glory of our kingdom everywhere! To show",
+                                     "everyone the impermanence of death. To spread this same",
+                                     "gift to all the people everywhere!"])
+        elif choice == 2:
+            character_txt(tvashtri, ["The world thought I was dangerous, so they marched here",
+                                     "with their armies, and their mages, and their assassins.",
+                                     "",
+                                     "They did not stop me. They can't stop me."])
+        elif choice == 3:
+            break
+        else:
+            raise NotImplementedError
+        
+        choice = prompt("What do you say?", choices)
+        
+    
+    character_txt(tvashtri, ["I now have a question for you."])
+    
+    choices = ["It feels like strength.", "It feels like power.", "It feels like hope."]
+    prompt_text = "What do your new powers feel like?"
+    choice = character_prompt(tvashtri, prompt_text, choices)
+    
+    if choice == 0:
+        character_txt(tvashtri, ["Then you are just as selfish as any holder ever has been.",
+                                 "This is why powers of this nature should never have ended",
+                                 "up in the hands of the weak-hearted."])
+    elif choice == 1:
+        character_txt(tvashtri, ["Then you are just as pitiful as any holder ever has been.",
+                                 "This is why the people's power never should have been put",
+                                 "in someone who was weak without them."])
+    elif choice == 2:
+        character_txt(tvashtri, ["Interesting. But what do you seek hope from? Hope in the",
+                                 "end of the fighting? Hope in a new life? Or hope you can",
+                                 "survive my hand? No matter. Your hope is vain. You are too",
+                                 "weak to wield them as they ever should have been."])
+    else:
+        raise NotImplementedError
+    
+    character_txt(tvashtri, ["My patience is wearing thin. You came here with a",
+                             "purpose, did you not?"])
+    
+    return story_0_tvashtri_fight
 
 # TODO: story_1_0  
 def story_1_start(player: Character) -> callable:
@@ -1363,7 +1457,6 @@ def story_1_start(player: Character) -> callable:
     else:
         raise NotImplementedError
 
-# TODO: story_1_a()
 def story_1_north_west_road(player: Character) -> callable:
     
     txt(["As you turn down the road, the sounds of battle become more",
@@ -1391,8 +1484,8 @@ def story_1_north_west_road(player: Character) -> callable:
     pack_leader.set_HP_MAX(20)
     pack_leader.set_HP(20)
     enemies = [enemy("Wolf 1"), enemy("Wolf 2"), enemy("Wolf 3"), pack_leader]
-    combat([soldier1, player], enemies,
-           "Some of the wolves begin to eye you warily and then a set of razor sharp fangs comes right for you.", 0)
+    battle_text = "Some of the wolves begin to eye you warily and then a set of razor sharp fangs comes right for you."
+    if combat([soldier1, player], enemies, battle_text, 0): return story_1_north_west_road
     
     if soldier1.get_HP() <= 0:
         txt(["The poor soldier heaves a couple of pained last breaths and is gone.",
@@ -1482,7 +1575,6 @@ def story_1_north_west_road(player: Character) -> callable:
          
     else:
         raise NotImplementedError
-    
 
 # TODO: story_1_b()
 def story_1_feldershire():

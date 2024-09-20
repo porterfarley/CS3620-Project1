@@ -100,19 +100,7 @@ class Character():
         
     # TODO: better death text, can we give a chance to repeat at the same story function?
     def die(self) -> None:
-        if(not self._user_controlled):
-            time.sleep(0.25)
-            print(f"  > {self.get_name(True)} has been defeated.")
-        else:
-            time.sleep(0.25)
-            print(f"  > Your vision begins to turn red and your breath becomes shallow.")
-            time.sleep(0.25)
-            print(f"  > Fear envelopes you. The deed has been done.")
-            time.sleep(0.25)
-            print(f"  > {self.get_name(True)} has been slain.")
-            time.sleep(0.25)
-            input("\nPress enter to continue.")
-            exit(0)
+        print(f"  > {self.get_name(True)} has been defeated.")
             
     def rest(self) -> None:
         self._HP = self._HP_MAX

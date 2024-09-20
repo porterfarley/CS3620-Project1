@@ -86,7 +86,7 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
     # Pause 1s after attack finished
     time.sleep(1)
 
-def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int):
+def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int) -> bool:
     """Handles combat turns
 
     Args:
@@ -94,6 +94,9 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
         enemies (list[Character]): all enemies
         combat_text (str): Text to print as combat is starting
         user_order (int): Handles the user's spot in turns. -1 = last, 1 = first, else = random.
+        
+    Returns:
+        bool: True if character died. False if character still alive.
     """
     
     from inspect import signature
@@ -185,3 +188,22 @@ def combat(allies: list[Character], enemies: list[Character], combat_text: str, 
         if input("  > Press enter to continue: ").upper() == "EXIT_PROGRAM":
             exit_program()
         print()
+        
+        # Check user alive and confirm want to restart
+        if user.get_HP() <= 0 and user_died():
+            user.rest()
+            return True
+    
+    return False
+    
+def user_died() -> bool:
+    from events import prompt
+    
+    print()
+    choices = ["Continue From Last Chapter", "Exit Game"]
+    choice = prompt("You have been defeated. What would you like to do?", choices)
+    
+    if choice == 0:
+        return True
+    else:
+        exit_program()
