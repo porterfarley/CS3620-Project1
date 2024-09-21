@@ -493,7 +493,6 @@ def story_0_eyma_talk(player: Character) -> callable:
          "looks up at you upon your arrival."])
     
     eyma = Mage("Eyma")
-    eyma.set_color(Color.RED)
     kheah = Assassin("Kheah")
     tristan = Knight("Tristan")
     character_txt(eyma, ["Ah, you are here. Thank you for coming."])
@@ -505,10 +504,6 @@ def story_0_eyma_talk(player: Character) -> callable:
          "almost sacred to be in her presence."])
     
     print_art("EYMA")
-    
-    eyma.set_color(Color.BLUE)
-    kheah.set_color(Color.ORANGE)
-    tristan.set_color(Color.GREEN)
     
     character_txt(eyma, [f"My name is {eyma.get_name(True)}, inheritor of my father's throne and newest wielder",
                          f"of the Spark. It has shown me many wonderful things in a world of such sorrow,",
@@ -1335,8 +1330,7 @@ def story_0_tvashtri_talk(player: Character) -> callable:
                              "purpose, did you not?"])
     
     return story_0_tvashtri_fight
-
-# TODO: story_1_0  
+  
 def story_1_start(player: Character) -> callable:
     
     tvashtri = Mage("Tvashtri")
@@ -1576,7 +1570,6 @@ def story_1_north_west_road(player: Character) -> callable:
     else:
         raise NotImplementedError
 
-# TODO: story_1_b()
 def story_0_feldershire(player: Character) -> callable:
     
     txt(["The trail weaves it's way in and out of the white aspens,",
@@ -1785,7 +1778,6 @@ def story_0_feldershire(player: Character) -> callable:
     
     return story_0_flynn
     
-# TODO: story_0_flynn
 def story_0_flynn(player: Character) -> callable:
     
     txt(["As the last glimpses of light fade away, you know it's time to",
@@ -1797,7 +1789,7 @@ def story_0_flynn(player: Character) -> callable:
          "windows that crackle from flame within. The faintest scent",
          "of smoked fish is carried to you."])
     
-    flynn = Assassin("???")
+    flynn = Knight("???")
     flynn.set_color(Color.RED)
     
     choices = ["Knock on the door.", "Sneak around the back."]
@@ -2012,9 +2004,293 @@ def story_0_flynn(player: Character) -> callable:
     else:
         raise NotImplementedError
 
-# TODO: events.story_0_flynn_house()
 def story_0_flynn_house(player: Character) -> None:
-    pass
+    
+    flynn = Knight("Flynn")
+    jayma = Knight("Jayma")
+    rama = Knight("Rama")
+    miro = Knight("Miro")
+    
+    character_txt(flynn, ["Family, we'll be welcoming a visitor to our table today. They will",
+                          "not be giving us any trouble, and we will treat them with respect.",
+                          f"This is {player.get_name(True)}."])
+    
+    txt(["An audible gasp comes from the woman, who quickly covers her mouth.",
+         "Worried glances are exchanged between her and her husband, and then",
+         "she shakes her hand."])
+    
+    character_txt(jayma, [f"My name is {jayma.get_name(True)}, and these are our kids,",
+                          f"{rama.get_name(True)} and {miro.get_name(True)}."])
+    
+    txt(["The older daughter attempts a smile, but the young boy makes",
+         "an innocent comment about why your face is so dark. You laugh",
+         "and attempt to diffuse the situation, but the awkwarness lasts",
+         "well into the night."])
+    
+    txt([f"{jayma.get_name(True)} serves a delicious stew, which is at mostly in",
+         f"tense silence. {flynn.get_name(True)} eventually breaks it and begins to",
+         "tell you his family's story.",
+         "",
+         f"{flynn.get_name(True)} and {jayma.get_name(True)} had lived in Feldershire about 20",
+         "years ago as teenagers. Around that time, the imperial forces,",
+         "or so they are called, came sweeping across the land killing",
+         "anyone in sight. When he finds out that you know nothing about",
+         f"who and what you're fighting for, {flynn.get_name(True)} explains that",
+         "the people call the army the imperialists because of the expansion",
+         "that the armies fight for. No one had ever heard or seen the \"king\",",
+         "but it was believed he ruled from a place where powerful ancient",
+         "leaders used to rule all the land."])
+    
+    txt(["Together, the two escaped from Feldershire, where they spent years",
+         "chasing the imperialist's trails. They felt they were safest where",
+         "the armies had already been, hiding in the wake of the destruction.",
+         "",
+         "Their path eventually led them back to Feldershire, where their",
+         "young family began. Two years ago, the armies returned unexpectedly",
+         f"to town. When they eventually ran out of places to hide, {flynn.get_name(True)}",
+         "singlehandedly drove them off and killed many soliders in the process."])
+    
+    character_txt(flynn, ["The beasts came seeking after some medallion they thought was",
+                          "hidden somewhere here in town. Must have been a pretty big threat",
+                          "with how big an army they sent our way."])
+    
+    character_txt(flynn, ["Couple months back, someone else came to town looking for the same",
+                          "thing. This time, wasn't no imperialists, but some surviving",
+                          "Yyondril. They told me they thought this might be the key to",
+                          "finally taking our lands back."])
+    
+    character_txt(flynn, [f"And this is where you come in {player.get_name(True)}. I know where the",
+                          "thing is. But the protectors are a little too strong for me alone.",
+                          "I need another warrior to help me get to it.",
+                          "",
+                          "Now the way I see it, someone like yourself will never be free",
+                          "until imperialists are beaten. Deserter or not, they'll find you,",
+                          "somehow, someday. If you help us stop them, you can finally win",
+                          "back a life of some kind. Plus, this a way to get back at them",
+                          "after everything you've ever been put through for them."])
+    
+    choices = ["Yes", "No"]
+    prompt_text = "So what do you say? Are you in?"
+    choice = character_prompt(flynn, prompt_text, choices)
+    
+    if choice == 0:
+        
+        character_txt(flynn, ["Now that's what I was hoping to hear. Go get some rest...",
+                              "ya know, if you rest I guess. We'll head out at fist light."])
+        
+        txt(["The man motions to a packed bedroll in the corner of the room,",
+             "takes his family, and retreats into the deeper rooms of the house."])
+        
+        return story_0_medallion_retrieval_setup
+        
+    elif choice == 1:
+        
+        character_txt(flynn, ["Come on now, you know you have no future out there, right?",
+                              "And if you can't bring yourself to do it for you, I need",
+                              "you to think about all the people of the world who need",
+                              "help, families just like mine with kids just like mine too.",
+                              "Kids who will be scared and in danger for the rest of their",
+                              "existences unless we do something."])
+        
+        prompt_text = "So I'm going to ask you one more time. Are you in?"
+        choice = character_prompt(flynn, prompt_text, choices)
+        
+        if choice == 0:
+            
+            character_txt(flynn, ["Now that's what I was hoping to hear. Go get some rest...",
+                              "ya know, if you rest I guess. We'll head out at fist light."])
+        
+            txt(["The man motions to a packed bedroll in the corner of the room,",
+                "takes his family, and retreats into the deeper rooms of the house."])
+            
+            return story_0_medallion_retrieval_setup
+        
+        elif choice == 1:
+            
+            from combat import user_died
+            
+            character_txt(flynn, ["Well, I'm not going to lie to ya and say I'm not dissapointed.",
+                                  "I'm sorry to say that you're no longer welcome in our home.",
+                                  "I'll see you out now."])
+            
+            txt(["The man's family retreats to another room as he walks you to",
+                 "the door. He shuts it behind him as you go to retrieve your",
+                 "belongings.",
+                 "",
+                 "Before you get to the hilt of your weapon, he says:"])
+            
+            character_txt(flynn, [f"Ya know, I've got this funny idea in my head, not everyone",
+                                  "thinks the same. But I think if you're not willing to help",
+                                  "be part of the solution—"])
+            
+            txt([f"From between your eyes comes the tip of {flynn.get_name(True)}'s blade, straight",
+                 "from the back of your skull."])
+            
+            character_txt(flynn, ["Well then you're just as guilty as the rest of 'em. Sweet",
+                                  f"dreams {player.get_name(True)}, and may we never run into each other again",
+                                  "in whatever lifetime you find yourself in."])
+            
+            if user_died(): return story_0_flynn_house
+            
+        else:
+            raise NotImplementedError
+        
+    else:
+        raise NotImplementedError
+    
+def story_0_medallion_retrieval_setup(player: Character) -> None:
+    
+    flynn = Knight("Flynn")
+    
+    txt(["Another dreamless sleep carries you to the morning, and you",
+         f"rise early to prepare your gear. {flynn.get_name(True)} looks a little more tired",
+         "than he had the night before, undoubtedly remaining awake to",
+         "make sure his family was safe from you."])
+    
+    txt(["After he finishes prepping, you leave due north across the plain for",
+         "sometime. You eventually reach a river and follow it into a sparse",
+         "pine forest."])
+    
+    character_txt(flynn, ["We'll wait here for a time. The folks that tasked me with",
+                          "getting the medallion, the Yyondril, said they'd have someone",
+                          "meet us here. A pretty sharp warrior from the talks of it."])
+    
+    character_txt(flynn, ["It'll just be the three of us in there. I don't know much,",
+                          "but this medallion thing used to be of great religious importance",
+                          "to some nature cult from these parts a long time ago. They",
+                          "say that the the trees themselves defend it. Guess we'll see",
+                          "how they fare against us, huh?"])
+    
+    txt(["Some time passes, and you begin to hear movement from the brush.",
+         f"A woman exits, bow drawn and pointed immediately at you. {flynn.get_name(True)}",
+         "with a little bit of explaining, manages to to stop her from",
+         "shooting you, but she still eyes you with extreme mistrust."])
+    
+    kheah = assassin("Kheah")
+    character_txt(kheah, [f"My name is {kheah.get_name(True)} of the Yyondril.",
+                          "*looks at you*",
+                          "Corpses like you call my people \"Goblins\", but we are",
+                          "more people than you'll ever be.",
+                          "...",
+                          "But if I must work with the likes of you in order to retrieve",
+                          "this treasure, then so be it."])
+    
+    character_txt(kheah, [f"{flynn.get_name(True)} may have told you, but the elements will stand against",
+                          "us, but they must not stop us from our goal.",
+                          "",
+                          "Before we enter, you must remember two things. First, only I",
+                          "will touch the Medallion. Second, we must always try to",
+                          "eliminate any magic users first. They stand the most threat to",
+                          "us as a group."])
+    
+    choices = ["Yes", "Not Yet"]
+    prompt_text = "Shall we enter?"
+    character_prompt(kheah, prompt_text, choices)
+    
+    character_txt(kheah, "We move now.")
+    
+    txt(["After another kilometer of hiking, you enter a large clearing.",
+         "Across from you stand three figures. Each appears to be a statue",
+         "carved from sturdy pine wood.",
+         "",
+         "At your entry, the \"statues\" stand upright and look directly at",
+         "your party."])
+    
+    return story_0_medallion_retrieval
+
+def story_0_medallion_retrieval(player: Character) -> callable:
+    
+    flynn = Knight("Flynn")
+    kheah = Assassin("Kheah")
+    allies = [player, flynn, kheah]
+    
+    mage1 = Mage("Tree Mage 1")
+    mage1.set_color(Color.RED)
+    knight1 = Knight("Tree Knight 1")
+    knight1.set_color(Color.RED)
+    knight1.set_HP_MAX(20)
+    knight1.set_DEF(1)
+    knight2 = Knight("Tree Knight 2")
+    knight1.set_HP_MAX(20)
+    knight2.set_color(Color.RED)
+    enemies = [mage1, knight1, knight2]
+    
+    combat_text = "They look at you, and begin marching forward ominously."
+    if combat(allies, enemies, combat_text, 0): return story_0_medallion_retrieval
+    
+    character_txt(kheah, "Admirable work, both of you. Here, take this.")
+    allies = [player, flynn, kheah]
+    for ally in allies:
+        if ally.get_HP() <= 0:
+            ally.set_HP(1)
+        
+        ally.change_HP(7)
+        
+    txt([f"{kheah.get_name(True)} uses a mass healing potion. Everyone gains 7 HP."])
+    
+    character_txt(kheah, ["The medallion shouldn't be far. Let's push forward."])
+    
+    txt(["You continue to move through the cave that the tree warriors had been",
+         "guarding. After about a half hour of climbing up, you reach a level that",
+         "opens to sun light. On a gleaming pedestal lies a medallion that appears",
+         "to be made of some kind of tree root. It shines brightly in the sun",
+         "and carries a kind of sacredness on the winds.",
+         "",
+         "In between you and the medallion, however, stands a group of tree",
+         "figures, who prepare weapons the moment you step onto the ledge."])
+    
+    allies = [player, flynn, kheah]
+    
+    m1 = Mage("Root Cleric 1")
+    m1.set_color(Color.RED)
+    m2 = Mage("Root Cleric 2")
+    m2.set_color(Color.RED)
+    k1 = Knight("Root Sentinel")
+    k1.set_color(Color.RED)
+    k1.set_DEF(3)
+    w1 = enemy("Warrior 1")
+    w2 = enemy("Warrior 2")
+    
+    enemies = [m1, m2, k1, w1, w2]
+    
+    combat_text = "They shout something in an unknown language and rush you."
+    if combat(allies, enemies, combat_text, 1): return story_0_medallion_retrieval
+    
+    if kheah.get_HP() <= 0: kheah.set_HP(1)
+    if flynn.get_HP() <= 0: flynn.set_HP(1)
+    
+    character_txt(kheah, ["And there it is! The prize. The key to turning the tide in our war."])
+    
+    txt([f"{kheah.get_name(True)} carefully grabs the medallion and places it in a leather",
+         "pouch. As she begins to walk back to you, a pillar of golden",
+         "light appears on the floor, rising to about the height of a person."])
+    
+    character_txt(kheah, ["Well boys, this is my ride. It's been a pleasure working with you",
+                          "and here's to ending the war."])
+    
+    txt(["She steps into the pillar, and when the light disappears, she has",
+         "vanished as well."])
+    
+    character_txt(flynn, ["Not sure I coulda thought it woulda gone like this, but I know",
+                          "we've done what we need to. Let's get on our way, shall we?"])
+    
+    txt(["The two of you hike back to the opening of the cave and see",
+         "the strewn corpses of the first warriors you battled.",
+         "",
+         "Before you can make it back to the tree line, another pillar",
+         "of golden light appears."])
+    
+    character_txt(kheah, ["Well, I don't make the rules. I guess we need you too."])
+    
+    txt([f"Without a chance to argue or fight, {kheah.get_name(True)} grabs you by the arm and",
+         "drags you through the portal.",
+         "",
+         "You're now standing in a dimly lit stone hallway, with several",
+         "flights of stairs in front of you."])
+    
+    character_txt(kheah, ["Come on, there's someone you need to meet."])
+
+    return story_0_eyma_talk
 
 # TODO: story_2_0  
 def story_2_0(player: Character) -> callable:
