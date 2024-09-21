@@ -1453,7 +1453,7 @@ def story_1_start(player: Character) -> callable:
     if choice == 0:
         return story_1_north_west_road
     elif choice == 1:
-        return story_1_feldershire
+        return story_0_feldershire
     else:
         raise NotImplementedError
 
@@ -1571,13 +1571,222 @@ def story_1_north_west_road(player: Character) -> callable:
              "shows the same puncture wounds, but below is just the shadowy form that",
              "is growing more and more normal to see."])
         
-        return story_1_feldershire
+        return story_0_feldershire
          
     else:
         raise NotImplementedError
 
 # TODO: story_1_b()
-def story_1_feldershire():
+def story_0_feldershire(player: Character) -> callable:
+    
+    txt(["The trail weaves it's way in and out of the white aspens,",
+         "growing more and more run down. No sign of footprints makes",
+         "this road even more peculiar."])
+    
+    txt(["After about an hour of travel, the sound of a branch snapping",
+         "cuts through the air."])
+    
+    txt([f"You flip around to see a {Color.RED}Grizzly Bear{Color.END} walk out",
+         "from the foliage."])
+    
+    allies = [player]
+    bear = enemy("Grizzly Bear")
+    bear.set_HP_MAX(20)
+    bear.set_HP(20)
+    bear.set_ATK(3)
+    bear.set_DEF(2)
+    enemies = [bear]
+    battle_text = "It stands up on two legs and lets out a mighty roar."
+    if combat(allies, enemies, battle_text, 0): return story_0_feldershire
+    
+    txt(["As the great beast falls to the forest floor, you let out",
+         "a sigh of relief.",
+         "",
+         "From the light on the trees, you can tell you don't have more",
+         "than a couple hours until the sun sets. You'd better not be in",
+         "the forest when light runs out, or this won't be your last",
+         "encounter with the local wildlife."])
+    
+    txt(["Gentle breezes cause the leaves to flutter as you pass. The",
+         "ocassional wildflower reminds you of the beautiful contrast",
+         "of this part of the land to the carnage of the battlefield you",
+         "left behind."])
+    
+    txt(["As the sun begins to drop behind the tree-line, you exit the",
+         "forest into a great plain where before you lies an abandoned",
+         "town.",
+         "",
+         "Feldershire looks like it used to be a lumber town, poised",
+         "right next to a great supply. The homes and buildings are",
+         "built from the same wood, but show great age and weathering."])
+    
+    txt(["You soon begin to understand the emptiness as you find old",
+         "blood stains on sections of the road and even on the outside",
+         "of some of the homes.",
+         "",
+         "The town is rather big, and you have a limited time before",
+         "you lose light."])
+    
+    choices = ["Look for weapons.",
+               "Look for armor.",
+               "Look for potions."]
+    choice = prompt("What do you do?", choices)
+    
+    if choice == 0:
+        
+        txt(["Towards where you entered lies a building with a large chimney.",
+             "What better place to look then the home of a smith.",
+             "",
+             "As you go to push the door open, the entire thing falls off of",
+             "it's hinges."])
+        
+        txt(["The bellows has been quiet for some time, and all weapons seem",
+             "to have been taken in a hurry. What you do find is a simple whetstone."])
+        
+        choices = ["Yes", "No"]
+        choice = prompt("Do you use the whetstone?", choices)
+        
+        if choice == 0:
+            txt([f"{player.get_name(True)} uses a whetstone.",
+                 f"  > {player.get_name(True)}'s ATK increases by 1!",
+                 f"  > Old ATK: {player.get_ATK()}",
+                 f"  > New ATK: {player.get_ATK() + 1}"])
+            player.set_ATK(player.get_ATK() + 1)
+        
+    elif choice == 1:
+        
+        txt(["On the east side of town, some of the last tracks",
+             "show many individuals running circles around sets of",
+             "wooden racks."])
+        
+        txt(["At the base of one of these racks lies the only remnant",
+             "a pair of metal gauntlets, much sturdier than your",
+             "current wrappings."])
+        
+        choices = ["Yes", "No"]
+        choice = prompt("Do you equip the gauntlets?", choices)
+        
+        if choice == 0:
+            txt([f"{player.get_name(True)} equips gauntlets.",
+                 f"  > {player.get_name(True)}'s DEF increases by 1!",
+                 f"  > Old DEF: {player.get_DEF()}",
+                 f"  > New DEF: {player.get_DEF() + 1}"])
+            player.set_DEF(player.get_DEF() + 1)
+        
+    elif choice == 2:
+        
+        txt(["In the center of town, you find a little square, the kind",
+             "you'd expect to find merchants at. This area contains a lot",
+             "of blood stains, and a great deal of crushed wooden",
+             "structures.",
+             "",
+             "As you walk through, something catches your eye."])
+        
+        txt(["A small piece of fabric sticks out from the dirt. You reach",
+             "down and grab it. Up comes the bright red silk of a doll's",
+             "dress.",
+             "",
+             "As you look at this, a blinding headache rocks you",
+             "momentarily, and you can almost see the little girl to whom",
+             "this used to belong. As quick as it came, the feeling passes",
+             "and you are able to continue down the street."])
+        
+        txt(["As your feet crunch atop the wreckage of a cart, you hear the",
+             "slightest tinkling of glass. You lift up the strewn wood and",
+             "find a crate underneath it.",
+             "",
+             "After carefully removing the crate from the earth, you find",
+             "three bottles. Each bottle used to have a label, but age has",
+             "worn off any ink that used to be there.",
+             "",
+             "There is, however, engraved on the side of the box are a cross",
+             "a fire emblem, and a skull."])
+        
+        import random
+        
+        bottles = ["Health", "Magic", "Death"]
+        random.shuffle(bottles)
+        
+        drank_health_potion = False
+        drank_magic_potion = False
+
+        choices = ["Bottle 1", "Bottle 2", "Bottle 3", "None"]
+        choice = prompt("Do you drink a potion?", choices)
+        
+        while choice != len(choices)-1:
+            
+            if choice == 3:
+                
+                txt(["You place the crate on the ground, and continue your",
+                    "march through town."])
+            
+            elif bottles[choice] == "Health":
+                txt(["The liquid has a soft taste of melon, and it seems to",
+                    "coat the insides of your throat as you swallow."])
+                txt(["You begin to feel incredible, more alive than you've",
+                    "felt since you were called up before."])
+                txt([f"{player.get_name(True)} drinks a {Color.GREEN}Health Potion{Color.END}.",
+                    f"  > {player.get_name(True)}'s HP increases by 10!",
+                    f"  > Old HP: {player.get_HP_MAX()}",
+                    f"  > New HP: {player.get_HP_MAX() + 10}"])
+                player.set_HP_MAX(player.get_HP_MAX() + 10)
+                player.set_HP(player.get_HP_MAX())
+                drank_health_potion = True
+                
+            elif bottles[choice] == "Magic":
+                txt(["The liquid has a sharp taste of blackberries, sending",
+                    "a jolt down your spine as you swallow."])
+                txt(["Your arms become tingly and the fibers on your shirt",
+                    "stand on end. A sharp crack of thunder rings through",
+                    "the air, and you feel your magic power grow."])
+                txt([f"{player.get_name(True)} drinks a {Color.BLUE}Magic Potion{Color.END}.",
+                    f"  > {player.get_name(True)}'s MP increases by 10!",
+                    f"  > Old HP: {player.get_MP_MAX()}",
+                    f"  > New HP: {player.get_MP_MAX() + 10}"])
+                player.set_MP_MAX(player.get_MP_MAX() + 10)
+                player.set_MP(player.get_MP_MAX())
+                drank_magic_potion = True
+            
+            elif bottles[choice] == "Death":
+                from combat import user_died
+                
+                txt(["The liquid has a light cucmber taste to it, bringing a sense",
+                    "of calm as you swallow."])
+                txt(["Without warning, every muscle in your body tenses. You begin",
+                    "to feel the most excruciating pain around your neck, and",
+                    "collapse to the ground.",
+                    "",
+                    "Aroud your neck, a ring of arcane fire squeezes tighter and",
+                    "tigher, until the world begins to go dark."])
+                txt([f"{player.get_name(True)} drinks {Color.RED}Merchant's Poison{Color.END}.",
+                    f"  > {player.get_name(True)}'s HP drops to 0.",
+                    f"  > Old HP: {player.get_HP()}",
+                    f"  > New HP: 0"])
+                
+                # Revert back health and magic if potions were drank
+                if drank_health_potion:
+                    player.set_HP_MAX(player.get_HP_MAX() - 10)
+                    
+                if drank_magic_potion:
+                    player.set_MP_MAX(player.get_MP_MAX() - 10)
+                
+                player.die()
+                if user_died(): return story_0_feldershire
+            else:
+                raise NotImplementedError
+            
+            del bottles[choice]
+            del choices[choice]
+            
+            choice = prompt("Do you drink a potion?", choices)
+        
+    else:
+        raise NotImplementedError
+    
+    return story_0_flynn
+    
+# TODO: story_0_flynn
+def story_0_flynn(player: Character) -> callable:
     pass
 
 # TODO: story_2_0  

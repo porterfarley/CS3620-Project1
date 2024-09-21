@@ -318,3 +318,9 @@ class Character():
         
         if self._MP > MP_MAX:
             self._MP = MP_MAX
+            
+    def set_ATK(self, ATK) -> None:
+        self._ATK = ATK
+    
+    def set_DEF(self, DEF) -> None:
+        self._DEF = DEF
