@@ -1787,6 +1787,233 @@ def story_0_feldershire(player: Character) -> callable:
     
 # TODO: story_0_flynn
 def story_0_flynn(player: Character) -> callable:
+    
+    txt(["As the last glimpses of light fade away, you know it's time to",
+         "find some shelter. You've made your way to the north side of",
+         "town, and as you search for a suitable house, you're shocked to",
+         "see light coming from one of the homes."])
+    
+    txt(["The small cabin has smoke rising from the chimney, and small",
+         "windows that crackle from flame within. The faintest scent",
+         "of smoked fish is carried to you."])
+    
+    flynn = Assassin("???")
+    flynn.set_color(Color.RED)
+    
+    choices = ["Knock on the door.", "Sneak around the back."]
+    choice = prompt("What do you do?", choices)
+    
+    if choice == 0:
+        
+        txt(["You make your way up the path to the small cabin. As you raise",
+             "your hand to knock, you feel the slightest prick of pain on your",
+             "neck."])
+        
+        character_txt(flynn, ["I'd stop right there if I was you. This ain't no place",
+                              "for a rotten corpse such as yourself."])
+        
+    elif choice == 1:
+        
+        txt(["Careful not to make any sound, you slowly make your way to the",
+             "back of the cabin. A small window will allow you to see who's",
+             "inside."])
+        
+        txt(["As you get within a couple meters of the house, a giant hand",
+             "is rested on your shoulder, and a knife begins pressing into",
+             "the back of your neck."])
+        
+        character_txt(["And what are the likes of you doing sneaking around my house?",
+                       "You stinking corpse, how'd you find us here?"])
+        
+    else:
+        raise NotImplementedError
+    
+    txt(["The man slowly leads you to the side yard, never releasing the tension of",
+         "the knife. As you turn the corner, you could not have prepared for the",
+         "piles of armor and robes, all covered in a long-dried black liquid."])
+    
+    character_txt(flynn, ["It's been a long time since I've seen one of you around these parts.",
+                          "I thought we were finally safe here again."])
+    
+    character_txt(flynn, ["You see this pile of crap right here? Make one wrong move and you're",
+                          "gonna end up just like 'em. You're lucky I'm a gentleman and have",
+                          "some questions for you. But choose not to comply and I reserve my",
+                          "right to end your trespassing, undead, \"life\", you got me?"])
+    
+    txt(["The man grabs some rope and ties your hands so tightly that the ropes",
+         "begin to cut into your arms. He motions you to a stump, and sits",
+         "on another across from you.",
+         "",
+         "The man is as burly as you've ever seen. His bright red hair and",
+         "broad shoulders make you question how he could have ever snuck up",
+         "on you. A bushy beard and two thick eyebrows make his expression",
+         "even tougher to read."])
+    
+    flynn.set_name("Flynn")
+    character_txt(flynn, [f"Name's {flynn.get_name(True)}."])
+    
+    choices = ["I don't know, I was separated.", "Plenty of us, they'll find me here."]
+    prompt_text = "First question: How many of you are there out there?"
+    choice = character_prompt(flynn, prompt_text, choices)
+    character_txt(player, choices[choice])
+    
+    if choice == 0:
+        
+        txt(["The man's eyebrows furrow and he looks at you even closer."])
+        
+        character_txt(flynn, ["Now the next question I'm going to ask you is more important.",
+                              "Did someone separate you, or did you separate yourself?"])
+        
+        choices = ["Yes", "..."]
+        character_prompt(flynn, "I mean to ask if you is a deserter?")
+        
+    elif choice == 1:
+        
+        txt(["His grimace doesn't break."])
+        
+        character_txt(flynn, ["Don't try to play me for a fool. It would take someone a lot wiser",
+                              "than a pile of bones to do that. You're out here alone, and there's",
+                              "not another one of ya in sight."])
+        
+        character_txt(flynn, ["Seems to me like you're a scared little kid running from the battle."])
+        
+        prompt_text = "We used to have a name for people like you. Deserters. You a deserter?"
+        choices = ["Yes", "..."]
+        character_prompt(flynn, prompt_text, choices)
+
+        
+    character_txt(flynn, ["*light chuckle*",
+                            "Well I'll be, a desertin' dead man. And I thought I'd never",
+                            "see the day.",
+                            "...",
+                            "So what made you so special huh? So special that you just",
+                            "woke up one day and decided you was gonna have free will?"])
+    
+    character_txt(flynn, ["Well then, I'm right ain't I? They have no clue where you are.",
+                          "",
+                          "I think if they did, they probably would have just put you out",
+                          "and made a new one instead, huh?",
+                          "",
+                          "Well let me tell ya, your chances of living just got a whole",
+                          "lot higher."])
+    
+    flynn.set_color(Color.ORANGE)
+    character_txt(flynn, ["You gotta name?"])
+    
+    character_txt(player, f"{player.get_name(True)}")
+    
+    character_txt(flynn, [f"Well, it's a pleasure to meet ya {player.get_name(True)}. Here's my deal",
+                          "for you. I can kill ya right now, let you go back to the way a",
+                          "dead man is supposed to be, or you can come join us for dinner.",
+                          "Heck, I don't know if you even eat, but my thoughts are that",
+                          "you're at more danger out there where the other non-deserting",
+                          "soldiers are then you are here with me.",
+                          "",
+                          "My family is inside, so you'll be leaving your weapons at the",
+                          "door, and at the slightest sign of trouble, I'll end ya right",
+                          "there without a second thought. Do I make myself clear?"])
+    
+    txt([f"Flynn carefully unties the ropes around your arms."])
+    
+    choices = ["Put down your weapons.", "Run for it", f"Attack {flynn.get_name(True)}"]
+    choice = prompt("What do you do?", choices)
+    
+    if choice == 0:
+        
+        txt([f"You walk with {flynn.get_name(True)} to his front porch, where you lean",
+             "your weapons on the house. He opens the door for you with knife",
+             "in hand as if to ensure you know you are still not fully trusted."])
+        
+        return story_0_flynn_house
+        
+    elif choice == 1:
+        from combat import attack, user_died
+        
+        txt(["The moment the bands come loose, you're on your feet and sprinting",
+             "for the treeline. You hear a deep yell from behind you."])
+        flynn.set_color(Color.RED)
+        
+        attack(flynn, player, [player], 6, 6, "Critical Strike")
+        
+        # Break if flynn manages to kill the player
+        if player.get_HP() <= 0 and user_died():
+            return story_0_flynn
+        
+        character_txt(flynn, ["You're a dead man, ya here!? If you ever come back to",
+                              "this area, I'll tear ya apart with my bare hands!"])
+        
+        txt([f"You continue running long after the sounds of {flynn.get_name(True)}'s yelling",
+             "has faded into the distance. You made it safely into the woods.",
+             "",
+             "The woods you were trying to find shelter from before."])
+        
+        txt(["Occassional howls break the eerie silence as you continue on at a light",
+             "jog. The moon fails to cut through the leaves above you, and keeping",
+             "your step becomes more and more impossible."])
+        
+        txt(["Ahead of you, you can finally see some moonlight, and you run towards",
+             "it."])
+        
+        txt(["As you cross into the light, you can see much clearer.",
+             "What you did not expect, however, was being unable to find footing."])
+        
+        txt(["The cliff that you've accidentally run off is steep, and you crash",
+             "down the mountain violently.",
+             "",
+             "The blunt side of a boulder finds your head, and you lose conciousness."])
+        
+        txt(["Your eyes flutter as you try to wake up. You hear one last thing before",
+             "fading into sleep once more:"])
+        
+        kheah = enemy("Kheah")
+        eyma = enemy("Eyma")
+        character_txt(kheah, f"Look what we have here. {eyma.get_name(True)} will be so proud of us.")
+        
+        return story_0_captured
+        
+    elif choice == 2:
+        
+        from combat import user_died
+        
+        flynn.set_color(Color.RED)
+        txt([f"As the ropes fall, you leap up and lunge at {flynn.get_name(True)}, but",
+             "not before he gets his attack first.",
+             "",
+             "He lets loose a battle scream that would make any lesser warrior faint."])
+        
+        allies = [player]
+        enemies = [flynn]
+        if combat(allies, enemies, "", -1): return story_0_flynn
+        
+        txt([f"{flynn.get_name(True)} falls to one knee, and then collapses. Blood begins to",
+             "pool underneath his massive form, and his breathing becomes very labored."])
+        
+        txt(["A blood curdling scream pierces the night, as a woman comes",
+             "running from the home to the fallen man."])
+        
+        jayma = enemy("Jayma")
+        character_txt(jayma, [f"WHAT HAVE YOU DONE!? {flynn.get_name(True)}, wake up!! {flynn.get_name(True)}, come",
+                              f"on, you have to get up! {flynn.get_name(True)}!! {flynn.get_name(True).upper()}!!!"])
+        
+        txt(["Flynn does not move. The woman begins to wail and scream even more.",
+             "Before long, two young children run from the door and join their mother",
+             "in trying to wake their father, but to no avail."])
+        
+        txt(["You stand up and begin the march towards where you entered the town.",
+             "No point in staying here any longer."])
+        
+        txt(["As you turn the corner of the last building, you face a line of Goblin",
+             "archers. Their bows are trained exactly on you."])
+        
+        kheah = enemy("Kheah")
+        character_txt(kheah, "You won't be escaping us this time. Archers! FIRE!")
+        if user_died(): return story_0_flynn
+        
+    else:
+        raise NotImplementedError
+
+# TODO: events.story_0_flynn_house()
+def story_0_flynn_house(player: Character) -> None:
     pass
 
 # TODO: story_2_0  

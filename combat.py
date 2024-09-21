@@ -83,8 +83,6 @@ def attack(attacker: Character, defender: Character, enemies: list[Character], d
         print(f"  > {defender.get_name(True)} successfully defends against {attacker.get_name(True)}'s {action_name}.")
         defender.on_defend(attacker)
 
-    # Pause 1s after attack finished
-    time.sleep(1)
 
 def combat(allies: list[Character], enemies: list[Character], combat_text: str, user_order: int) -> bool:
     """Handles combat turns

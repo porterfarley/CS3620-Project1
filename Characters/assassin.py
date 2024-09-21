@@ -52,6 +52,24 @@ class Assassin(Character):
             
         attack(self, opponent, enemies, DICE, NUM_DICE, ACTION_NAME)
     
+    def get_cpu_action(self) -> Action:
+        import random
+        
+        curr_HP = self.get_HP()
+        curr_MP = self.get_MP()
+        
+        should_heal = random.random()
+        
+        if(curr_HP <= self.get_HP_MAX()/3 and curr_MP > 25 and should_heal >= 0.4):
+            return self.get_action_by_name("Prayer")
+        else:
+            choice = random.random()
+            
+            if choice > 0.5 and curr_MP >= 20:
+                return self.get_action_by_name("Critical Strike")
+            else:
+                return self.get_action_by_name("Attack")
+    
     def sneak_attack(self, enemies: list[Character]) -> None:
         
         from combat import attack
