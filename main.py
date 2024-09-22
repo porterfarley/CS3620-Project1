@@ -19,11 +19,6 @@ def main():
     next_story = story_0(player)
     while(callable(next_story)):
         next_story = next_story(player)
-        
-    player = Knight("Satoru")
-    story_1_start(player)
-        
-    print("All Done")
     
 if __name__ == "__main__":
     main()

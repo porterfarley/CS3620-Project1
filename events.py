@@ -337,7 +337,6 @@ def story_0(player: Character) -> callable:
          "that monster? Where is it? Where is everything from where you were?"])
     
     necro = Mage("???")
-    necro.set_color(Color.PURPLE)
     character_txt(necro, "Oh! You're finally awake I see, that took much longer than normal. On your feet now.")
     
     txt(["The person in front of you wears a deep purple Mage's robe, with wrappings",
@@ -356,28 +355,25 @@ def story_0(player: Character) -> callable:
         character_txt(player, choices[x])
         
         if x == 0:
-            character_txt(necro, ["The Goblins' front porch. They were planning to march on the capital,",
-                                  "we would have lost thousands if we hadn't gotten here first. We're about 2 kilometers",
-                                  "out from their castle walls. And running out of warriors, I might add, which is why",
-                                  "we called you up."])
+            character_txt(necro, ["The Goblins' front porch. Traitors were plannign a march on the capital",
+                                  "it's great we got here first."])
         elif x == 1:
             necro.set_name("Tvashtri")
             character_txt(necro, [f"You can call me {necro.get_name(True)}. I'm his royal highness' wizard. I'm also the",
                                   "reason you're breathing once more. Well, maybe not breathing, but you get the picture."])
         elif x == 2:
             character_txt(necro, ["Can't say. You, and the rest, are warriors for the kingdom, protecting our people",
-                                  "and the kingdoms' interests. I called you up to keep fighting."])
-            character_txt(necro, ["You won't remember anything from the past, but it's a blessing you don't. Your",
-                                  "memories, your body, all sacrifices for the people."])
+                                  "and the kingdoms' interests. At some point, you were killed, and I called you up",
+                                  "again to keep fighting."])
             
         x = prompt("What do you say?", choices)
     
     if type(player).__name__ == "Knight":
-        return story_1_start
+        return story_0_start
     elif type(player).__name__ == "Mage":
-        return story_2_0
+        return story_0_start
     elif type(player).__name__ == "Assassin":
-        return story_3_0
+        return story_0_start
     else:
         raise NotImplementedError
 
@@ -1261,6 +1257,99 @@ def story_0_tvashtri_killed(player: Character) -> None:
     txt([f"{tvashtri.get_name(True)} heaves one final breath, and seems to let go. From",
             "her body rises a tiny, golden flicker. It rises through the roof",
             "to find a patch of soil somewhere beyond the castle walls."])
+    
+    txt(["A silent world is interrupted only by the ringing in your ears.",
+         "You did it. Everyone is safe now. You're safe now.",
+         "",
+         "Every trace of the necromancer's power begins to fade as you",
+         "see the shards of bone and the dark residue begin to evaporate",
+         "like ash."])
+    
+    txt(["For just a moment, you see a familiar face standing across the",
+         "room. An elderly man in a white robe stands over a pile of bones",
+         "in the corner.",
+         "",
+         "He turns around and looks at you. His eyes no longer magically blue",
+         "they still twinkle with kindness and pride."])
+    
+    h1 = HonoredOne("Honored One")
+    
+    character_txt(h1, ["I knew you could do it. I am so proud. You did it, it's finally",
+                       "over. The people of every land will finally once again have a",
+                       "chance for peace."])
+    
+    txt(["The man turns and looks once again at the bones at his feet.",
+         "With a flick of his staff, an arcane run appears over it that",
+         "glows with a golden hue."])
+    
+    character_txt(h1, ["I'm afraid that the years have taken their toll on me my old friend.",
+                       "The world is ready for someone else to take the mantle...",
+                       "...",
+                       "And I do believe I'm long overdue for a little rest."])
+    
+    character_txt(h1, ["All of those who were stolen by necromantic spells will reawaken",
+                       "to themselves and regain living bodies. The world will be in chaos",
+                       f"for a short time. They will need {Color.CYAN}The Honored One{Color.END}. They'll need {Color.BOLD}you{Color.END}."])
+    
+    txt(["The man slowly begins fading away, and the bones begin to slowly",
+        "turn to ash as well. His eyes squint with an even kinder smile."])
+    
+    character_txt(h1, ["Remember to love the people. And remember who you really are.",
+                       f"Goodbye {player.get_name(True)}. Until we meet again."])
+    
+    txt(["With those final words, he is gone.",
+         "",
+         "The throne room is cracked and overgrown, but has once again",
+         "grown to hold a sacred feeling. The marble throne across the",
+         "room seems to call to you."])
+    
+    txt(["As you take your rightful spot, sparks of magic begin to swirl",
+         "all around you.",
+         "",
+         "In an instant, light begins appearing from each fissure in the",
+         "marble walls and floor, mending the broken stone in an instant.",
+         "The torch sconches on the walls roar to light in an array of",
+         "breath-taking colors."])
+    
+    txt(["From the floor rise several picture frames, each repairing itself",
+         "from the ruins they had become with age. Surrounded in magic",
+         "light, they begin to float in front of you, slowly becoming clearer",
+         "and clearer.",
+         "",
+         "One shows a map of the kingdoms around, buzzing with colored runes",
+         "that blink excitedly. Another rises next to the first, alternating",
+         "through different views into the different surrounding kingdoms.",
+         "You can see many confused individuals standing around, several",
+         f"on their knees sobbing. These must be what {Color.CYAN}The Honored One{Color.END} had",
+         "been describing, that every soldier had returned."])
+    
+    kheah = Assassin("Kheah")
+    eyma = Mage("Eyma")
+    tristan = Knight("Tristan")
+    
+    txt(["A very real sense of your new responsibility sets in, and you know",
+         "you've got a lot of work cut out for you. At that moment, the frame",
+         f"shifts and shows an extremely excited {eyma.get_name(True)}, {kheah.get_name(True)}, and {tristan.get_name(True)}",
+         "celebrating and cheering together. You know you can find some help",
+         "along the way."])
+    
+    txt(["Because truly now...",
+         "...",
+         "You have become..."])
+    
+    txt([f"{Color.CYAN}The Honored One{Color.END}."])
+    
+    return story_end
+    
+def story_end(player: Character) -> bool:
+    
+    txt([f"Thank you for playing {Color.CYAN}The Honored One{Color.END}. I hope",
+         "you have enjoyed it!",
+         "",
+         "Written by Porter Farley, 2024."])
+    
+    return True
+    
 
 def story_0_tvashtri_talk(player: Character) -> callable:
     
@@ -1331,13 +1420,12 @@ def story_0_tvashtri_talk(player: Character) -> callable:
     
     return story_0_tvashtri_fight
   
-def story_1_start(player: Character) -> callable:
+def story_0_start(player: Character) -> callable:
     
     tvashtri = Mage("Tvashtri")
-    character_txt(tvashtri, ["No more delays, they need you out there on the front lines.",
-                             "The 32nd batallion sent word they needed reinforcements hours ago.",
-                             "You'll find them a kilometer north-west of here. Go fast and fight",
-                             "for your country."])
+    character_txt(tvashtri, ["No more delays, they need you out there. There's a group of soldiers",
+                             "fighting a couple kilometers north-west from here. Join them, and",
+                             "report back if you survive. Good luck."])
     
     txt(["As you exit the wizard's tent, you find only carnage awaiting.",
          "Pools of orange and black liquid pools around strewn corpses."])
@@ -2405,16 +2493,19 @@ def character_prompt(speaker: Character, prompt: str, choices: list[str]) -> int
             continue
         
 def print_art(title: str) -> None:
-    title = title.upper()
-    file = open("art.txt", "r").read().splitlines()
-    found_art = False
-    for line in file:        
-        if line == ("START_" + title):
-            found_art = True
-            continue
-        elif line == ("END_" + title):
-            break
-    
-        if found_art:
-            print(line)
-    print()
+    try:
+        title = title.upper()
+        file = open("art.txt", "r").read().splitlines()
+        found_art = False
+        for line in file:        
+            if line == ("START_" + title):
+                found_art = True
+                continue
+            elif line == ("END_" + title):
+                break
+        
+            if found_art:
+                print(line)
+        print()
+    except:
+        print()
