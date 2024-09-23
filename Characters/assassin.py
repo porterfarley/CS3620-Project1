@@ -65,7 +65,7 @@ class Assassin(Character):
         else:
             choice = random.random()
             
-            if choice > 0.5 and curr_MP >= 20:
+            if choice > 0.63 and curr_MP >= 20:
                 return self.get_action_by_name("Critical Strike")
             else:
                 return self.get_action_by_name("Attack")

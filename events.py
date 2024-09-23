@@ -295,8 +295,16 @@ def story_0_character_creation() -> Character:
     print(f"{Color.BOLD}{Color.UNDERLINE}{shadow.get_name(True)}: What is thy name, warrior?")
     time.sleep(0.25)
     name = input(f"  > {Color.DARKGREY} Your answer:{Color.END} ")
-    print()
     
+    while name == "":
+        time.sleep(0.25)
+        print("  > Not a valid input. Please try again.")
+        time.sleep(0.25)
+        print(f"{Color.BOLD}{Color.UNDERLINE}{shadow.get_name(True)}: What is thy name, warrior?")
+        time.sleep(0.25)
+        name = input(f"  > {Color.DARKGREY} Your answer:{Color.END} ")
+    
+    print()
     player.set_name(name)
     time.sleep(0.25)
     text = [f"Well then {player.get_name(True)}, prepare to prove thyself.",
@@ -321,14 +329,36 @@ def story_0_character_creation() -> Character:
     
     character_txt(shadow, "Do not delight in thyself, warrior. You are far from the honor you yet seek.")
     
-    enemies = [shadow]
-    player.set_user_controlled(False)
-    allies = [player]
     battle_text = "Around the eyes materializes a dark figure with spikes rising from its head.\nOne great step rocks the great glass pane, and it swings at you with a giant, outstretched fist."
-    combat(allies, enemies, battle_text, -1)
+    
+    # Simulate Battle
+    print(battle_text)
+    time.sleep(0.25)
+    print("Initiative Order")
+    time.sleep(0.25)
+    print(f"  > 1) {str(shadow)}")
+    time.sleep(0.25)
+    print(f"  > 2) {str(player)}")
+    time.sleep(0.25)
+    print()
+    time.sleep(0.25)
+    print(f"{str(shadow)}")
+    time.sleep(0.25)
+    print(f"  > {shadow.get_name(True)} uses Smash on {player.get_name(True)}")
+    time.sleep(0.25)
+    print(f"  > {shadow.get_name(True)} rolls 20 + 9 to hit.")
+    time.sleep(0.25)
+    print(f"  > {player.get_name(True)} rolls {player.roll_to_defend()} + {player.get_DEF()} to defend.")
+    time.sleep(0.25)
+    print(f"  > {shadow.get_name(True)} deals 121 damage to {player.get_name(True)}.")
+    time.sleep(0.25)
+    print(f"  > {player.get_name(True)} has been defeated.")
+    time.sleep(0.25)
+    input(f"  > Press enter to continue: ")
+    time.sleep(0.25)
+    print()
     
     player.rest()
-    player.set_user_controlled(True)
     return player
     
 def story_0(player: Character) -> callable:
@@ -1173,7 +1203,6 @@ def story_0_tvashtri_fight(player: Character) -> callable:
     
     return story_0_tvashtri_killed
     
-# TODO: events.story_0_tvashtri_killed()
 def story_0_tvashtri_killed(player: Character) -> None:
     
     tvashtri = LordOfDeath("Tvashtri")
@@ -1349,7 +1378,6 @@ def story_end(player: Character) -> bool:
          "Written by Porter Farley, 2024."])
     
     return True
-    
 
 def story_0_tvashtri_talk(player: Character) -> callable:
     
@@ -1822,8 +1850,8 @@ def story_0_feldershire(player: Character) -> callable:
                     "the air, and you feel your magic power grow."])
                 txt([f"{player.get_name(True)} drinks a {Color.BLUE}Magic Potion{Color.END}.",
                     f"  > {player.get_name(True)}'s MP increases by 10!",
-                    f"  > Old HP: {player.get_MP_MAX()}",
-                    f"  > New HP: {player.get_MP_MAX() + 10}"])
+                    f"  > Old MP: {player.get_MP_MAX()}",
+                    f"  > New MP: {player.get_MP_MAX() + 10}"])
                 player.set_MP_MAX(player.get_MP_MAX() + 10)
                 player.set_MP(player.get_MP_MAX())
                 drank_magic_potion = True
@@ -1945,7 +1973,7 @@ def story_0_flynn(player: Character) -> callable:
                               "Did someone separate you, or did you separate yourself?"])
         
         choices = ["Yes", "..."]
-        character_prompt(flynn, "I mean to ask if you is a deserter?")
+        character_prompt(flynn, "I mean to ask if you is a deserter?", choices)
         
     elif choice == 1:
         
@@ -1977,7 +2005,7 @@ def story_0_flynn(player: Character) -> callable:
                           "Well let me tell ya, your chances of living just got a whole",
                           "lot higher."])
     
-    flynn.set_color(Color.ORANGE)
+    flynn.set_color(Color.GREEN)
     character_txt(flynn, ["You gotta name?"])
     
     character_txt(player, f"{player.get_name(True)}")
@@ -2111,9 +2139,7 @@ def story_0_flynn_house(player: Character) -> None:
                           f"{rama.get_name(True)} and {miro.get_name(True)}."])
     
     txt(["The older daughter attempts a smile, but the young boy makes",
-         "an innocent comment about why your face is so dark. You laugh",
-         "and attempt to diffuse the situation, but the awkwarness lasts",
-         "well into the night."])
+         "an innocent comment about why you have wrappings around your face."])
     
     txt([f"{jayma.get_name(True)} serves a delicious stew, which is at mostly in",
          f"tense silence. {flynn.get_name(True)} eventually breaks it and begins to",
@@ -2154,8 +2180,7 @@ def story_0_flynn_house(player: Character) -> None:
                           "Now the way I see it, someone like yourself will never be free",
                           "until imperialists are beaten. Deserter or not, they'll find you,",
                           "somehow, someday. If you help us stop them, you can finally win",
-                          "back a life of some kind. Plus, this a way to get back at them",
-                          "after everything you've ever been put through for them."])
+                          "back a life of some kind."])
     
     choices = ["Yes", "No"]
     prompt_text = "So what do you say? Are you in?"
@@ -2254,7 +2279,7 @@ def story_0_medallion_retrieval_setup(player: Character) -> None:
          "with a little bit of explaining, manages to to stop her from",
          "shooting you, but she still eyes you with extreme mistrust."])
     
-    kheah = assassin("Kheah")
+    kheah = Assassin("Kheah")
     character_txt(kheah, [f"My name is {kheah.get_name(True)} of the Yyondril.",
                           "*looks at you*",
                           "Corpses like you call my people \"Goblins\", but we are",
@@ -2312,9 +2337,9 @@ def story_0_medallion_retrieval(player: Character) -> callable:
         if ally.get_HP() <= 0:
             ally.set_HP(1)
         
-        ally.change_HP(7)
+        ally.change_HP(15)
         
-    txt([f"{kheah.get_name(True)} uses a mass healing potion. Everyone gains 7 HP."])
+    txt([f"{kheah.get_name(True)} uses a mass healing potion. Everyone gains 15 HP."])
     
     character_txt(kheah, ["The medallion shouldn't be far. Let's push forward."])
     
@@ -2379,14 +2404,6 @@ def story_0_medallion_retrieval(player: Character) -> callable:
     character_txt(kheah, ["Come on, there's someone you need to meet."])
 
     return story_0_eyma_talk
-
-# TODO: story_2_0  
-def story_2_0(player: Character) -> callable:
-    print("Got to story_2_0")
-
-# TODO: story_3_0  
-def story_3_0(player: Character) -> callable:
-    print("Got to story_3_0")
 
 # - - - - - - - U T I L I T I E S - - - - - - - 
 

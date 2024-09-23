@@ -16,8 +16,8 @@ class Knight(Character):
     
     def __init__(self, name):
         super().__init__(name)
-        self._HP = 30
-        self._HP_MAX = 30
+        self._HP = 25
+        self._HP_MAX = 25
         self._MP = 10
         self._MP_MAX = 10
         self._ATK = 2
